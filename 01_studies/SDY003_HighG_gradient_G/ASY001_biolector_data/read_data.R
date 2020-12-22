@@ -4,6 +4,11 @@
 # Save data in a list
 dat <- list()
 
+# Define dataset study token
+dat$study_id <- "SDY003"
+dat$study_token <- "HighG"
+dat$study_sub <- NA
+
 # Define glucose as carbon source for plot descriptions
 dat$CSource = "glucose"
 dat$CSourceRead = "glc"

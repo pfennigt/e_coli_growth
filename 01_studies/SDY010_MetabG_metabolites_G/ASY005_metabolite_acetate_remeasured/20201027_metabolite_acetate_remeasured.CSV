@@ -1,0 +1,29 @@
+User: USER,Path: C:\Program Files\BMG\CLARIOstar\User\Data,Test run no.: 136
+Test name: sigma acetate,Date: 2020-10-27,Time: 3:46:22 PM
+
+Absorbance
+
+Linear regression fit
+Y = m * x + b
+,Parameter,Value,
+450,Slope,0.0566271,
+,Offset,0.445,
+,r,0.9991718,
+,r²,0.9983443,
+
+
+Well,Content,Raw Data (450),Standard Concentrations,Linear regression fit based on Raw Data (450),
+B02,Sample X1,0.723,,4.91,
+B03,Sample X2,0.763,,5.618,
+B04,Sample X3,0.827,,6.753,
+B05,Sample X4,0.892,,7.887,
+B06,Sample X5,0.964,,9.16,
+B07,Sample X6,0.802,,6.305,
+B08,Sample X7,0.612,,2.943,
+B09,Sample X8,0.949,,8.904,
+B10,Sample X9,0.835,,6.891,
+C02,Standard S1,0.472,0,0.47,
+C03,Standard S2,0.971,10.000,9.295,
+C04,Standard S3,2.157,30.000,30.235,
+C10,Sample X10,0.66,,3.79,
+D10,Sample X11,0.645,,3.541,

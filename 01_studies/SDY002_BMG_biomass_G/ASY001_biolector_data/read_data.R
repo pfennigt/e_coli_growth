@@ -4,6 +4,11 @@
 # Save data in a list
 dat <- list()
 
+# Define dataset study token
+dat$study_id <- "SDY002"
+dat$study_token <- "BMG"
+dat$study_sub <- NA
+
 # Define glucose as carbon source for plot descriptions
 dat$CSource = "glucose"
 dat$CSourceRead = "glc"
@@ -17,7 +22,7 @@ layout.file <- file.path(DATPATH, paste0(expid,"_layout.csv"))
 # Define used colors
 Amounts = "amount"
 PltColors = "color"
-dat$bgCol = "royalblue3"
+dat$bgCols = "royalblue3"
 
 # Define analyzed time range
 dat$xrng = c(0,12.5)
@@ -39,3 +44,6 @@ dat$data <- readExperiment(data.file,
                       group2 = c(dat$CSourceRead,Amounts),
                       group2.color = PltColors
 )
+
+# Read plot annotation data
+dat$anno <- NA

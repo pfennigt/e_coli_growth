@@ -1,0 +1,80 @@
+User: USER,Path: C:\Program Files\BMG\CLARIOstar\User\Data,Test run no.: 132,
+Test name: sigma glycogen,Date: 2020-10-27,Time: 1:03:24 PM,
+,,,
+ID1: glycogen gain G0,,,
+Fluorescence (FI),,,
+,,,
+Linear regression fit,,,
+Y = m * x + b,,,
+,Parameter,Value,
+535-15/587-20,Slope,350710.355,
+,Offset,1522.3,
+,r,0.9954645,
+,r²,0.9909496,
+,,,
+,,,
+Well,Content, Raw Data (535-15/587-20), Linear regression fit based on Raw Data (535-15/587-20)
+B01,Sample X1,68351,0.191
+B02,Sample X2,105426,0.296
+B03,Sample X3,101033,0.284
+B04,Sample X4,107778,0.303
+B05,Sample X5,99286,0.279
+B06,Sample X6,88642,0.248
+B07,Sample X7,83954,0.235
+B08,Sample X8,79356,0.222
+B09,Sample X9,72399,0.202
+B10,Sample X10,71678,0.2
+B11,Sample X11,60009,0.167
+B12,Sample X12,8790,0.021
+C01,Sample X1,70016,0.195
+C02,Sample X2,109382,0.308
+C03,Sample X3,102197,0.287
+C04,Sample X4,108167,0.304
+C05,Sample X5,101351,0.285
+C06,Sample X6,89870,0.252
+C07,Sample X7,85232,0.239
+C08,Sample X8,81430,0.228
+C09,Sample X9,73606,0.206
+C10,Sample X10,75860,0.212
+C11,Sample X11,61578,0.171
+C12,Sample X12,9211,0.022
+D01,Sample X13,5277,0.011
+D02,Sample X14,51289,0.142
+D03,Sample X15,88487,0.248
+D04,Sample X16,83187,0.233
+D05,Sample X17,9341,0.022
+D06,Sample X18,8998,0.021
+D07,Sample X19,6698,0.015
+D08,Sample X20,5029,0.01
+D09,Sample X21,4748,0.009
+D10,Sample X22,4577,0.009
+D11,Sample X23,4043,0.007
+D12,Sample X24,4755,0.009
+E01,Sample X13,5509,0.011
+E02,Sample X14,52475,0.145
+E03,Sample X15,89325,0.25
+E04,Sample X16,84342,0.236
+E05,Sample X17,9050,0.021
+E06,Sample X18,8969,0.021
+E07,Sample X19,6741,0.015
+E08,Sample X20,5668,0.012
+E09,Sample X21,5046,0.01
+F02,Sample X25,234677,0.665
+F03,Sample X26,39822,0.109
+F04,Sample X27,44850,0.124
+F05,Standard S1,5239,0.011
+F06,Standard S2,5504,0.011
+F07,Standard S3,7870,0.018
+F08,Standard S4,14611,0.037
+F09,Standard S5,26096,0.07
+G02,Sample X28,38808,0.106
+G03,Sample X29,41381,0.114
+G05,Standard S1,5052,0.01
+G06,Standard S2,5634,0.012
+G07,Standard S3,8113,0.019
+G08,Standard S4,13894,0.035
+G09,Standard S5,25716,0.069
+G10,Standard S6,49822,0.138
+G11,Standard S7,72962,0.204
+H10,Standard S6,48735,0.135
+H11,Standard S7,75760,0.212

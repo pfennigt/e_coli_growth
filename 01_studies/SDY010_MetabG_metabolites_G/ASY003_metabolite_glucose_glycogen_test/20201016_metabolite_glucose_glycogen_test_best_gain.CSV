@@ -1,0 +1,37 @@
+User: USER,Path: C:\Program Files\BMG\CLARIOstar\User\Data,Test run no.: 119
+Test name: sigma glycogen,Date: 2020-10-16,Time: 5:37:32 PM
+
+Fluorescence (FI)
+
+Linear regression fit
+Y = m * x + b
+,Parameter,Value,
+535-15/587-20,Slope,112531.8855932,
+,Offset,7094.6779661,
+,r,0.9993843,
+,r²,0.9987690,
+
+
+Well,Content, Raw Data (535-15/587-20), Linear regression fit based on Raw Data (535-15/587-20),
+A01,Sample X1,19770,0.113,
+A02,Sample X2,3040,-0.036,
+A03,Sample X3,8006,0.008,
+A04,Sample X4,8655,0.014,
+A05,Sample X5,1806,-0.047,
+B05,Sample X5,1836,-0.047,
+G05,Standard S1,9224,0.019,
+G06,Standard S2,45429,0.341,
+G07,Standard S3,144102,1.217,
+G08,Standard S4,231099,1.991,
+G09,Sample X6,12961,0.052,
+G10,Sample X7,41997,0.31,
+G11,Sample X8,130019,1.092,
+G12,Sample X9,210846,1.811,
+H05,Standard S1,10210,0.028,
+H06,Standard S2,49459,0.376,
+H07,Standard S3,145706,1.232,
+H08,Standard S4,231758,1.996,
+H09,Sample X6,13855,0.06,
+H10,Sample X7,44849,0.335,
+H11,Sample X8,130735,1.099,
+H12,Sample X9,171738,1.463,

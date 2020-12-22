@@ -4,7 +4,12 @@
 # Save data in a list
 dat <- list()
 
-# Define glucose as carbon source for plot descriptions
+# Define dataset study token
+dat$study_id <- "SDY004"
+dat$study_token <- "BMA"
+dat$study_sub <- NA
+
+# Define acetate as carbon source for plot descriptions
 dat$CSource = "acetate"
 dat$CSourceRead = "ace"
 
@@ -13,12 +18,11 @@ expid <- "31_Ecoli_2020-1831_REDUCTION-1"
 DATPATH <- "01_studies/SDY004_BMA_biomass_A/ASY001_biolector_data"
 data.file <- file.path(DATPATH, paste0(expid,".csv"))
 layout.file <- file.path(DATPATH, paste0(expid,"_layout.csv"))
-annotation.file <- file.path(DATPATH,"plot_annotations.csv")
 
 # Define used colors
 Amounts = "ace.amount"
 PltColors = "ace.color"
-dat$bgCol = "firebrick2"
+dat$bgCols = "firebrick2"
 
 # Define analyzed time range
 dat$xrng = c(0,40)
@@ -40,3 +44,6 @@ dat$data <- readExperiment(data.file,
                            group2 = c(dat$CSourceRead,Amounts),
                            group2.color = PltColors
 )
+
+# Read plot annotation data
+dat$anno <- NA
