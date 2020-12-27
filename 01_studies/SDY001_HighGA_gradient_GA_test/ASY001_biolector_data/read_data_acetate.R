@@ -4,14 +4,13 @@
 # Save data in a list
 dat <- list()
 
+#Define data type
+dat$data_type = "biolector_data"
+
 # Define dataset study token
 dat$study_id <- "SDY001"
-dat$study_token <- "HighGA_acetate"
+dat$study_token <- "HighGA"
 dat$study_sub <- "acetate"
-
-# Define glucose as carbon source for plot descriptions
-dat$CSource = "acetate"
-dat$CSourceRead = "ace"
 
 # Define paths and locations
 expid <- "25_Ecoli_2020_REDUCTION-1"
@@ -20,12 +19,50 @@ data.file <- file.path(DATPATH, paste0(expid,".csv"))
 layout.file <- file.path(DATPATH, paste0(expid,"_layout.csv"))
 annotation.file <- file.path(DATPATH,"plot_annotations_acetate.csv")
 
+# Define experimental parameters (formatted to be parsed)
+dat$carbon_source = "acetate"
+dat$varied_factor = "acetate~concentration"
+dat$varied_factor_unit = "C*'-'*mmol~l^-1"
+
+# Define used BioLector parameters
+dat$biolector_parameters = list(
+  # specify the renaming of the raw data names
+  measurements = c( 
+    scatter="Biomass",
+    ribof="Riboflavine",
+    O2="DO(Pst3)",
+    pH="pH(HP8)",
+    NADH="NADH - NADPH"
+  ),
+  # units of the raw data measurements (formatted to be parsed)
+  units = c( 
+    "scatter" = "AU",
+    "ribof" = "AU",
+    "O2" = "'%'",
+    "pH" = "",
+    "NADH" = "AU"
+  ),
+  # descriptive text for the raw data measurements (formatted to be parsed)
+  descriptors = c( 
+    "scatter" = "backscatter",
+    "ribof" = "riboflavin",
+    "O2" = "O[2]~saturation",
+    "pH" = "pH",
+    "NADH" = "NADH"
+  ),
+  kLa = 230, # 1/h
+  well_volume = 1 # ml
+)
+
 # Define skipped wells (no glucose data)
 skipWellList = c(paste0(toupper(letters[1:3]), rep(1:7,3)))
 
+# Define internal grouping
+dat$layout_group = "ace"
+dat$layout_amount = "ace.amount"
+dat$layout_color = "ace.color"
+
 # Define used colors
-Amounts = "ace.amount"
-PltColors = "ace.color"
 dat$bgCols = colorRampPalette(c("white", "firebrick2"))(7)
 
 # Define analyzed time range

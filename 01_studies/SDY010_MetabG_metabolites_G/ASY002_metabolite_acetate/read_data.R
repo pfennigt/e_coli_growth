@@ -4,6 +4,9 @@
 # Save data in a list
 dat <- list()
 
+#Define data type
+dat$data_type = "metabolite_measurements"
+
 # Define dataset study token
 dat$study_id <- "SDY010"
 dat$study_token <- "MetabG"

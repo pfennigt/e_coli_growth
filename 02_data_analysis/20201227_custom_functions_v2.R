@@ -197,133 +197,55 @@ ggplotDf = function(mat, groups, times){
   return(mat)
 }
 
-savePlts = function(pltList, filePath = "",width = 1000, height = 600, svgZoom = 1){
-  #' Save plots contained in a plts variable for different datasets
-  #' Saves in three formats: svg, pdf and png
+savePlts = function(x = "RPlot", type = "pdf", filePath = "", prefix="", width = 10, height = 6){
+  #' Saving plots
   #' 
-  #' @param pltList a list contining saved plots or plottable ggplot objects in a structure following List$experiment_id$plots or List$experiment_id$subexperiment_id$plots or a mixture of both.
-  #' @param filePath path where the plots should be saved
-  #' @param width width argument chosen if using the png plotting option. The width used for svg and pdf plotting is chosen as width/100 * svgZoom
-  #' @param height height argument chosen if using the png plotting option. The height used for svg and pdf plotting is chosen as height/100 * svgZoom
-  #' @param svgZoom factor multiplied to width and height for saved svg and pdf. corresponds to a 1/svgZoom times magnification in these plots.
+  #' @description Save plots to the current or a specified directory.
+  #' Accepts a list of plots or records the currently displayed plot
+  #' 
+  #' @param x string or list. If x is a string, the current plot will be recorded and saved with prefix_x being the title. If x is a list, all list items must be plots and will be saved with their respective names.
+  #' @param type string. Specifies the type of plot, e.g. pdf, png or svg
+  #' @param filepath string. Path to the target directory for saving. defaults to the current working directory
+  #' @param prefix string. Optional string to be included in the title of the saved plots as prefix_name to tell apart different experiments
+  #' @param width integer. Width of the plot. For the same output size compared to pdf and svg plots, the width and height of png plots should be multiplied by 100
+  #' @param height integer. Height of the plot. For the same output size compared to pdf and svg plots, the width and height of png plots should be multiplied by 100
+  #' 
+  #' @examples
+  #' savePlts() # saves the currently displayed plot as "Rplot.pdf" to the current working directory
+  #' savePlts("scatter", "png" ,"", "HighGA", 1000, 600) # saves the currently displayed plot as "HighGA_scatter.png" to the current working directory
+  #' savePlts(plts) # saves all plots in plts as pdfs with their respectibe list names to the to the current working directory 
   
-  cats = names(pltList)
+  xType = typeof(x)
+  pltFunc = eval(parse(text=type))
   
-  for(category in cats){
-    nams = names(pltList[[category]])
-    nams = nams[!nams %in% c("mods","items")]
+  if(nchar(prefix)>0){prefix = paste0(prefix,"_")}
+  
+  
+  if(xType == "character"){
+    plt = recordPlot()
     
-    mdlBool = grepl("Mdl$",category)
+    pltNam = paste0(prefix, x, ".", type)
+    pltPath = file.path(filePath, pltNam)
+    
+    pltFunc(pltPath, width = width, height = height)
+    print(plt)
+    dev.off()
+    
+  }else if(xType == "list"){
+    nams = names(x)
     
     for(nam in nams){
       
-      if(!mdlBool){
-        pltPath = paste0(filePath, category, "_", nam)
-        
-        svg(paste0(pltPath, ".svg"), width = width/100 * svgZoom, height = height/100 * svgZoom)
-        print(pltList[[category]][[nam]])
-        dev.off()
-        
-        pdf(paste0(pltPath, ".pdf"), width = width/100 * svgZoom, height = height/100 * svgZoom)
-        print(pltList[[category]][[nam]])
-        dev.off()
-        
-        png(paste0(pltPath, ".png"), width = width, height = height)
-        print(pltList[[category]][[nam]])
-        dev.off()
-        
-      }else{
-        subnams = names(pltList[[category]][[nam]])
-        
-        for(subnam in subnams){
-          pltPath = paste0(filePath, category, "_", nam, toupper(sub("^(.).*", "\\1", subnam)), sub("^.(.*)", "\\1", subnam))
-          
-          svg(paste0(pltPath, ".svg"), width = width/100 * svgZoom, height = height/100 * svgZoom)
-          print(pltList[[category]][[nam]][[subnam]])
-          dev.off()
-          
-          pdf(paste0(pltPath, ".pdf"), width = width/100 * svgZoom, height = height/100 * svgZoom)
-          print(pltList[[category]][[nam]])
-          dev.off()
-          
-          png(paste0(pltPath, ".png"), width = width, height = height)
-          print(pltList[[category]][[nam]][[subnam]])
-          dev.off()
-        }
-      }
-    }
-  }
-}
-
-savePltsSingle = function(pltList, pltVec, filePath = "", width = 1000, height = 600, svgZoom = 1){
-  for(pltNam in pltVec){
-    
-    pltNamSplt = strsplit(pltNam, "_")[[1]]
-    category = pltNamSplt[1]
-    nam = pltNamSplt[2]
-    
-    mdlBool = grepl("Mdl$",category)
-    pltPath = paste0(filePath, pltNam)
-    
-    if(!mdlBool){
-      svg(paste0(pltPath, ".svg"), width = width/100 * svgZoom, height = height/100 * svgZoom)
-      print(pltList[[category]][[nam]])
-      dev.off()
+      pltNam = paste0(prefix, nam,".", type)
+      pltPath = file.path(filePath, pltNam)
       
-      pdf(paste0(pltPath, ".pdf"), width = width/100 * svgZoom, height = height/100 * svgZoom)
-      print(pltList[[category]][[nam]])
-      dev.off()
-      
-      png(paste0(pltPath, ".png"), width = width, height = height)
-      print(pltList[[category]][[nam]])
-      dev.off()
-      
-    }else{
-      subnam = regexpr("[A-Z]", nam)
-      subnam = substring(nam,subnam)
-      subnam = paste0(tolower(sub("^(.).*", "\\1", subnam)), sub("^.(.*)", "\\1", subnam))
-      
-      nam = substring(nam,1,subnam-1)
-      
-      svg(paste0(pltPath, ".svg"), width = width/100 * svgZoom, height = height/100 * svgZoom)
-      print(pltList[[category]][[nam]][[subnam]])
-      dev.off()
-      
-      pdf(paste0(pltPath, ".pdf"), width = width/100 * svgZoom, height = height/100 * svgZoom)
-      print(pltList[[category]][[nam]])
-      dev.off()
-      
-      png(paste0(pltPath, ".png"), width = width, height = height)
-      print(pltList[[category]][[nam]][[subnam]])
+      pltFunc(pltPath, width = width, height = height)
+      print(x[[nam]])
       dev.off()
     }
+  }else{
+    stop("unknown type for x")
   }
-}
-
-savePltsPDF = function(pltList, pltVec, pdfName, filePath = "", width = 1000, height = 600){
-  pdf(paste0(filePath, pdfName, ".pdf"), width = width, height = height)
-  
-  for(pltNam in pltVec){
-    
-    pltNamSplt = strsplit(pltNam, "_")[[1]]
-    category = pltNamSplt[1]
-    nam = pltNamSplt[2]
-    
-    mdlBool = grepl("Mdl$",category)
-    
-    if(!mdlBool){
-      print(pltList[[category]][[nam]])
-    }else{
-      subnamPos = regexpr("[A-Z]", nam)
-      subnam = substring(nam,subnamPos)
-      subnam = paste0(tolower(sub("^(.).*", "\\1", subnam)), sub("^.(.*)", "\\1", subnam))
-      
-      nam = substring(nam,1,subnamPos-1)
-      
-      print(pltList[[category]][[nam]][[subnam]])
-    }
-  }
-  dev.off()
 }
 
 excludedScaling = function(df, excltime=NULL, exclgroups=c()){
@@ -654,6 +576,82 @@ findDrops = function(mat, times, groups, derivQuantThresh = 0.05, derivQuantThre
   return(matPeaksDf)
 }
 
+combineDrops = function(found_drops){
+  groups = unique(found_drops$groups)
+  
+  combined_drops = lapply(groups, function(current_group){
+    submat = found_drops[
+      found_drops$groups==current_group, 
+      c("t1", "t2", "n1", "n2", "groups")
+    ]
+    submat = submat[order(submat$n1), ]
+    
+    if (nrow(submat)<=1) {
+      return(submat)
+    } 
+    
+    peakMat = submat[1, ]
+    
+    for (sRow in 2:nrow(submat)) {
+      subRow = submat[sRow,]
+      brokenBool = F
+      
+      for(pRow in 1:nrow(peakMat)){ #do the ranges overlap?
+        underBool = all(peakMat[pRow, 1:2] < subRow[,1])
+        overBool = all(peakMat[pRow, 1:2] > subRow[,2])
+        
+        if(!(underBool | overBool)){
+          peakMat[pRow, 1] = min(peakMat[pRow, 1], subRow[,1])
+          peakMat[pRow, 3] = min(peakMat[pRow, 3], subRow[,3])
+          peakMat[pRow, 2] = max(peakMat[pRow, 2], subRow[,2])
+          peakMat[pRow, 4] = max(peakMat[pRow, 4], subRow[,4])
+          
+          brokenBool = T
+          break
+        }
+      }
+      if(!brokenBool){
+        peakMat = rbind(peakMat, subRow)
+      }
+    }
+    return(peakMat)
+  })
+  
+  combined_drops = do.call(rbind, combined_drops)
+  return(combined_drops)
+}
+
+getDropValues <- function(dat, IDs, combined_drops, wells){
+  dat_means = lapply(IDs, function(ID){
+    rowMeans(getData(dat, ID)[, wells])
+  })
+  names(dat_means) <- IDs
+  
+  drop_values = lapply(1:nrow(combined_drops), function(x){
+    dropLims = as.numeric(combined_drops[x, c("n1", "n2")])
+    
+    res = matrix(nrow = length(IDs),
+                 ncol = 2,
+                 dimnames = list(NULL, c("xmin", "xmax"))
+    )
+    
+    for (i in 1:length(IDs)) {
+      res[i,] = dat_means[[i]][dropLims]
+    }
+    
+    res = as.data.frame(res)
+    
+    res$variable = IDs
+    res$drop_no = x
+    
+    return(res)
+  })
+  
+  drop_values = do.call(rbind, drop_values)
+  
+  return(drop_values)
+}
+
 predictBM = function(dat, model){
   if(is.null(dim(dat))){
     pred = predict(model, newdata = data.frame(value=dat))
@@ -803,4 +801,93 @@ label_parsedMixed = function (labels, multi_line = TRUE) {
       lapply(values, function(expr) c(parse(text = expr)))
     })
   }
+}
+
+# Count the number of decimal places
+decimalplaces <- function(x) {
+  if ((x %% 1) != 0) {
+    nchar(strsplit(sub('0+$', '', as.character(x)), ".", fixed=TRUE)[[1]][[2]])
+  } else {
+    return(0)
+  }
+}
+
+# Estimate biomass in two growth phases
+estimate_two_phases = function(values, times, switchTime, lm1, lm2){
+  
+  switchBool = times<=switchTime
+  switchValue = values[times==switchTime]
+  
+  coefs1=coef(lm1)
+  if(!all(is.na(lm2))){
+    coefs2=coef(lm2)
+    
+    phase1Max = (switchValue * coefs1[2]) + coefs1[1]
+    
+    res = list((values[switchBool] * coefs1[2]) + coefs1[1],
+               ((values[!switchBool] - switchValue)* coefs2[2]) + phase1Max)
+    
+  }else{
+    res = list((values[switchBool] * coefs1[2]) + coefs1[1],
+               rep(NA, sum(!switchBool)))
+  }
+  
+  
+  res = do.call(c, res)
+  return(res)
+}
+
+# Create a background colors for a value vector
+choose_bg_colors <- function(values, bg_cols){
+  
+  # First determine, if only one value is present for the factor or if the steps are of equal size
+  varied_factor_steps <- 
+    values[-1] - values[-length(values)] %>%
+    unique()
+  
+  mono_spaced_bg <- length(values) == 1
+  equally_spaced_bg <- length(varied_factor_steps) == 1
+  
+  # For only one factor level, the one background color can be used
+  if (mono_spaced_bg) {
+    res = bg_cols
+    
+  } else if (equally_spaced_bg) {
+    
+    # For equally spaced levels, use a linear colorRampPalette
+    res = colorRampPalette(
+      bg_cols
+    )(length(values))
+    
+  }else{
+    
+    # For unequal spacing adjust the background color number
+    # First scale all factor values by multiple of 10 such that there are no decimal places
+    factor_amount_Ndec = max(sapply(values, decimalplaces))
+    factor_amount_scale = values * 10^factor_amount_Ndec
+    
+    # Revalue the factor values as positions in a linear scale, starting with 1 for the smalles value
+    factor_amount_scale = factor_amount_scale - min(factor_amount_scale) + 1
+    
+    #Create a linear scaled colorRampPalette and choose the factor level values according to their position
+    res = colorRampPalette(bg_cols)(max(factor_amount_scale))
+    res = res[factor_amount_scale]
+  }
+  
+  return(res)
+}
+
+# Visualize a vector of hex or rgb colors
+show_colors <- function(x){
+  df <- data.frame(cols = factor(x))
+  plt <- ggplot(df, aes(x = cols, y = 1, fill = cols)) +
+    theme_bw() +
+    geom_bar(stat = "identity") +
+    scale_fill_manual(values = x, guide = F) +
+    labs(x = "",y = "")+
+    theme(
+      axis.ticks.y = element_blank(),
+      axis.text.y = element_blank()
+    )
+  print(plt)
 }

@@ -4,14 +4,13 @@
 # Save data in a list
 dat <- list()
 
+#Define data type
+dat$data_type = "biolector_data"
+
 # Define dataset study token
 dat$study_id <- "SDY001"
-dat$study_token <- "HighGA_glucose"
+dat$study_token <- "HighGA"
 dat$study_sub <- "glucose"
-
-# Define glucose as carbon source for plot descriptions
-dat$CSource = "glucose"
-dat$CSourceRead = "glc"
 
 # Define paths and locations
 expid <- "25_Ecoli_2020_REDUCTION-1"
@@ -20,12 +19,51 @@ data.file <- file.path(DATPATH, paste0(expid,".csv"))
 layout.file <- file.path(DATPATH, paste0(expid,"_layout.csv"))
 annotation.file <- file.path(DATPATH,"plot_annotations_glucose.csv")
 
+# Define experimental parameters (formatted to be parsed)
+dat$carbon_source = "glucose"
+dat$varied_factor = "glucose~concentration"
+dat$varied_factor_unit = "C*'-'*mmol~l^-1"
+
+# Define used BioLector parameters
+dat$biolector_parameters = list(
+  # specify the renaming of the raw data names
+  measurements = c( 
+    scatter="Biomass",
+    ribof="Riboflavine",
+    O2="DO(Pst3)",
+    pH="pH(HP8)",
+    NADH="NADH - NADPH"
+  ),
+  # units of the raw data measurements (formatted to be parsed)
+  units = c( 
+    "scatter" = "AU",
+    "ribof" = "AU",
+    "O2" = "'%'",
+    "pH" = "",
+    "NADH" = "AU"
+  ),
+  # descriptive text for the raw data measurements (formatted to be parsed)
+  descriptors = c( 
+    "scatter" = "backscatter",
+    "ribof" = "riboflavin",
+    "O2" = "O[2]~saturation",
+    "pH" = "pH",
+    "NADH" = "NADH"
+  ),
+  kLa = 230, # 1/h
+  well_volume = 1 # ml
+)
+
 # Define skipped wells (no acetate data)
 skipWellList = c(paste0(toupper(letters[4:6]), rep(1:7,3)))
 
+
+# Define internal grouping
+dat$layout_group = "glc"
+dat$layout_amount = "amount"
+dat$layout_color = "color"
+
 # Define used colors
-Amounts = "amount"
-PltColors = "color"
 dat$bgCols = colorRampPalette(c("white", "royalblue3"))(7)
 
 # Define analyzed time range
@@ -45,9 +83,9 @@ dat$data <- readExperiment(data.file,
                       blank.id = "blank",
                       blank.data = c("Biomass","Riboflavine", "NADH - NADPH"),
                       skip.wells  =  skipWellList,
-                      group1 = dat$CSourceRead,
-                      group2 = c(dat$CSourceRead,Amounts),
-                      group2.color = PltColors
+                      group1 = dat$layout_group,
+                      group2 = c(dat$layout_group,dat$layout_amount),
+                      group2.color = dat$layout_color
 )
 
 # Read plot annotation data

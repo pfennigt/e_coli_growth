@@ -4,6 +4,9 @@
 # Save data in a list
 dat <- list()
 
+#Define data type
+dat$data_type = "drymass_weights"
+
 # Define dataset study token
 dat$study_id <- "SDY004"
 dat$study_token <- "BMA"
