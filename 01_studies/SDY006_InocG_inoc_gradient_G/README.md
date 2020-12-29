@@ -1,9 +1,9 @@
-This SDY001_HighGA_gradient_GA_test README.md file was generated on 2020-12-29 by Tobias Pfennig
+This SDY006_InocG_inoc_gradient_G README.md file was generated on 2020-12-29 by Tobias Pfennig
 
 
 GENERAL INFORMATION
 
-1. Title of Dataset: HighGA_gradient_GA_test
+1. Title of Dataset: SDY006_InocG_inoc_gradient_G
 
 2. Author Information
 	A. Principal Investigator Contact Information
@@ -24,7 +24,7 @@ GENERAL INFORMATION
 		Address: 
 		Email: 
 
-3. Date of data collection (single date, range, approximate date): 2020-02-18
+3. Date of data collection (single date, range, approximate date): 2020-06-06
 
 4. Geographic location of data collection: 51.19055739134027, 6.7904520065037675
 
@@ -51,7 +51,7 @@ DATA & FILE OVERVIEW
 
 1. File List: 
 	ASY001_biolector_data: folder with BioLector Pro measurement data and layout file
-
+	
 	ASY001_biolector_data_OTscript.py: OT-2 script used for pipetting of the measured FlowerPlate
 
 2. Relationship between files, if important: 
@@ -72,13 +72,13 @@ METHODOLOGICAL INFORMATION
 
 	Escherichia coli strain W3110Z1 was defrosted from -80 °C freezer sample #DD13 (genotype: laciq, PN25-tetR, SpR, IN(rrnD-rrnE)1, rph-1, (see: ATCC 39936); received from: Expressys (Dr. Rolf Lutz)). 		
 	
-	The bacteria were first transferred into liquid LB medium (20 g l^-1 LB Broth (Lennox); Carl Roth GmbH + Co. KG, Karlsruhe, Germany) with 100 mg ml^1 spectinomycin and incubated at 250 rpm and 37 °C. After one change of medium, they were plated on an agarose Petri dish containing 35 g l^-1 LB broth and 100 mg ml^-1 spectinomycin. The inoculated plate was left to incubate at 37 °C overnight. The bacteria were transferred onto new agarose plates and incubated at 37 °C multiple times to acchieve single, monoclonal colonies. The last plate was placed in refrigeration and used as the source for inoculations of liquid media.
+	The bacteria were plated on an agarose Petri dish containing 35 g l^-1 LB broth and 100 mg ml^-1 spectinomycin. The inoculated plate was left to incubate at 37 °C overnight. The bacteria were transferred onto new agarose plates and incubated at 37 °C multiple times to acchieve single, monoclonal colonies. The last plate was placed in refrigeration and used as the source for inoculations of liquid media.
 	
 	Liquid cultures were created by picking a colony from the source-plate and transferring it into 5 ml of minimal M9 medium with growth-supporting supplements, antibiotics, and 22 mM (0.4 % w/v) glucose ("M9G", Tab. S2). Yeast extract was also added to the medium to a concentration of 1 g l^-1. This liquid culture was then incubated at 250 rpm and 37 °C. Every two to seven days, 50 ul of this liquid culture were transferred into 5 ml of fresh M9G medium and continued to be incubated. One day before the measurement the culture was renewed as explained before.
 	
-	5 ml of an 1 OD cell solution were prepared by first measuring the optical density at 600 nm wavelength of a 1:4 dilution of culture with MilliQ. An appropriate amount of cell culture was spun down and the cell pellet was resuspended in 5 ml of fresh M9 medium with growth-supporting additives and antibiotics ("M9S", Tab. S2) by pipetting. Each 50 ml of M9S, M9G, and 66 mM (0.4 % w/v) acetate ("M9A", Tab. S2) medium, as well as the 5 ml of 1 OD cell solution were placed in an OT-2 pipetting robot with P300 pipette module (Opentrons, New York, USA). A 48-well MTP-48-BOH well plate ("FlowerPlate"; m2p-labs GmbH, Baesweiler, Germany) was filled using the pipetting script ASY001_biolector_data_OTscript.py. The layout included seven-step gradients of both glucose and acetate with equal carbon-molarity ranging from 0 to 119.88 C-mmol l^-1. Each incoulated well was filled with 900 ul of appropriately mixed medium and 100 ul of cell solution. The 6 blank wells contained 1 ml of medium with different carbon sources and concentrations.
+	5 ml of an 1 OD cell solution were prepared by first measuring the optical density at 600 nm wavelength of a 1:4 dilution of culture with MilliQ. An appropriate amount of cell culture was spun down and the cell pellet was resuspended in 10 ml of M9G by pipetting. 50 ml of M9 medium with growth-supporting additives and antibiotics ("M9S", Tab. S2) and 10 ml M9G, as well as the 10 ml of 1 OD cell solution were placed in an OT-2 pipetting robot with P300 pipette module (Opentrons, New York, USA). A 48-well MTP-48-BOH well plate ("FlowerPlate"; m2p-labs GmbH, Baesweiler, Germany) was filled using the pipetting script ASY001_biolector_data_OTscript.py. The layout included 15-step gradients of inoculation OD ranging from 0.02 to 0.5 and a uniform glucose carbon-molarity of 119.88 C-mmol l^-1. Each incoulated well was filled with 100 ul of M9S and 900 ul of a mixture of M9G and the cell solution with varying ratio. The 3 blank wells contained 1 ml of 119.88 C-mmol l^-1 medium.
 	
-	The FlowerPlate was measured in a BioLector Pro (m2p-labs GmbH, Baesweiler, Germany) bioreactor at 37 °C with 900 rpm and the optical modules (product number and gain in parenthesis): scatter (E-OP-201, 3), riboflavin fluorescence (E-OP-227, 6), pH (E-OP-202, 7), O2 saturation (E-OP-203, 7), and NADH fluorescence (E-OP-405, 1).
+	The FlowerPlate was measured in a BioLector Pro (m2p-labs GmbH, Baesweiler, Germany) bioreactor at 37 °C with 900 rpm and the optical modules (product number and gain in parenthesis): scatter (E-OP-201, 3), riboflavin fluorescence (E-OP-227, 6), pH (E-OP-202, 7), O2 saturation (E-OP-203, 7), and NADH fluorescence (E-OP-405, 7).
 	
 2. Methods for processing the data: 
 
@@ -93,6 +93,6 @@ METHODOLOGICAL INFORMATION
 
 5. Environmental/experimental conditions: controlled environment (37 °C, 900 rpm shaking, gas transfer with kLa = 230 h^-1), atmosphere unchanged
 
-6. Describe any quality-assurance procedures performed on the data: 
+6. Describe any quality-assurance procedures performed on the data: visual comparions of data curves with replicates and previous experiments, data is unchanged
 
 7. People involved with sample collection, processing, analysis and/or submission: Rainer Machne, Tobias Pfennig

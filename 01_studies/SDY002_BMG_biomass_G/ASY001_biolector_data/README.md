@@ -1,4 +1,4 @@
-This ASY001_biolector_data readme.txt file was generated on 2020-12-20 by Tobias Pfennig
+This ASY001_biolector_data README.md file was generated on 2020-12-29 by Tobias Pfennig
 
 
 GENERAL INFORMATION
@@ -19,10 +19,10 @@ GENERAL INFORMATION
 		Email: tobias.pfennig@hhu.de
 
 	C. Alternate Contact Information
-		Name: 
-		Institution: 
+		Name: Jonas Burmester
+		Institution: Heinrich Heine University - Institute for synthetic microbiology
 		Address: 
-		Email: 
+		Email: jonas.burmester@hhu.de
 
 3. Date of data collection (single date, range, approximate date): 2020-03-03
 
@@ -56,14 +56,14 @@ DATA & FILE OVERVIEW
 
 	27_Ecoli_2020_REDUCTION-1_layout.csv: wellplate layout description with applied factors
 	
-	read_data.R: Reads BioLector Pro data into R
+	read_data.R: reads BioLector Pro data into R
 
 2. Relationship between files, if important: 
-	27_Ecoli_2020_REDUCTION-1.csv is better readable, processed version of 27-Ecoli_2020--2020-03-03-09-58-40.csv
+	27_Ecoli_2020_REDUCTION-1.csv: is better readable, processed version of 27-Ecoli_2020--2020-03-03-09-58-40.csv
 
-	27_Ecoli_2020_REDUCTION-1_layout.csv describes applied factors for each well in 27-Ecoli_2020--2020-03-03-09-58-40.csv and 27_Ecoli_2020_REDUCTION-1.csv
+	27_Ecoli_2020_REDUCTION-1_layout.csv: describes applied factors for each well in 27-Ecoli_2020--2020-03-03-09-58-40.csv and 27_Ecoli_2020_REDUCTION-1.csv
 	
-	read_data.R: Reads 25_Ecoli_2020_REDUCTION-1.csv into R
+	read_data.R: reads 27_Ecoli_2020_REDUCTION-1.csv into R
 
 3. Additional related data collected that was not included in the current data package: 
 
@@ -82,11 +82,11 @@ METHODOLOGICAL INFORMATION
 	
 	The bacteria were first transferred into liquid LB medium (20 g l^-1 LB Broth (Lennox); Carl Roth GmbH + Co. KG, Karlsruhe, Germany) with 100 mg ml^1 spectinomycin and incubated at 250 rpm and 37 °C. After one change of medium, they were plated on an agarose Petri dish containing 35 g l^-1 LB broth and 100 mg ml^-1 spectinomycin. The inoculated plate was left to incubate at 37 °C overnight. The bacteria were transferred onto new agarose plates and incubated at 37 °C multiple times to acchieve single, monoclonal colonies. The last plate was placed in refrigeration and used as the source for inoculations of liquid media.
 	
-	Liquid cultures were created by picking a colony from the source-plate and transferring it into 5 ml of minimal M9 medium with growth-supporting supplements, antibiotics, 22 mM (0.4 % w/v) glucose ("M9G", Tab. S2), depending on the experiment. Yeast extract was also added to the medium to a concentration of 1 g l^-1. This liquid culture was then incubated at 250 rpm and 37 °C. Every two to seven days, 50 ul of this liquid culture were transferred into 5 ml of fresh M9G medium and continued to be incubated. One day before the measurement the culture was renewed as explained before.
+	Liquid cultures were created by picking a colony from the source-plate and transferring it into 5 ml of minimal M9 medium with growth-supporting supplements, antibiotics, and 22 mM (0.4 % w/v) glucose ("M9G", Tab. S2). Yeast extract was also added to the medium to a concentration of 1 g l^-1. This liquid culture was then incubated at 250 rpm and 37 °C. Every two to seven days, 50 ul of this liquid culture were transferred into 5 ml of fresh M9G medium and continued to be incubated. One day before the measurement the culture was renewed as explained before.
 	
-	5 ml of an 1 OD cell solution were prepared by first measuring the optical density at 600 nm wavelength of a 1:4 dilution of culture with MilliQ. An appropriate amount of cell culture that was spun down and the cell pellet was resuspended in 5 ml of fresh M9 medium with growth-supporting additives and antibiotics ("M9S", Tab. S2) by pipetting. Each 50 ml of M9S and M9G, as well as the 5 ml of 1 OD cell solution were used for culture praparation. A 48-well MTP-48-BOH well plate ("FlowerPlate"; m2p-labs GmbH, Baesweiler, Germany) was filled with 900 ul M9G medium per well resulting in a uniform carbon-molarity of 119.88 C-mmol l^-1. Each inocoulated well was additionally filled with 100 ul of cell solution. The 3 blank wells contained additional 100 ul of M9S.
+	5 ml of an 1 OD cell solution were prepared by first measuring the optical density at 600 nm wavelength of a 1:4 dilution of culture with MilliQ. An appropriate amount of cell culture was spun down and the cell pellet was resuspended in 5 ml of fresh M9 medium with growth-supporting additives and antibiotics ("M9S", Tab. S2) by pipetting. Each 50 ml of M9S and M9G, as well as the 5 ml of 1 OD cell solution were used for culture praparation. A 48-well MTP-48-BOH well plate ("FlowerPlate"; m2p-labs GmbH, Baesweiler, Germany) was filled with 900 ul M9G medium per well resulting in a uniform glucose carbon-molarity of 119.88 C-mmol l^-1. Each inocoulated well was additionally filled with 100 ul of cell solution. The 3 blank wells contained additional 100 ul of M9S.
 	
-	The FlowerPlate was measured in a BioLector Pro at 37 °C with 900 rpm and the optical modules (product number and gain in parenthesis): scatter (E-OP-201, 3), riboavin fluorescence (E-OP-227, 6), pH(E-OP-202, 7), O2 saturation (E-OP-203, 7) and NADH fluorescence(E-OP-405, 1).
+	The FlowerPlate was measured in a BioLector Pro (m2p-labs GmbH, Baesweiler, Germany) bioreactor at 37 °C with 900 rpm and the optical modules (product number and gain in parenthesis): scatter (E-OP-201, 3), riboflavin fluorescence (E-OP-227, 6), pH (E-OP-202, 7), O2 saturation (E-OP-203, 7), and NADH fluorescence (E-OP-405, 7).
 	
 	Starting at a raw scatter value of 1.5, each 6 wells were sampled once per hour and pooled (see ASY002_drymass_weights for further info). 5 ml of this pooled sample were pulled through pre-dried and pre-weighed ReliaDisc Non-sterile Membrane Filtration Media (Ahlstrom-Munksjo, Helsinki, Finland) cellulose-acetate filters with 0.2 mm pore size filters using a vaccuum. The filters were subsequently dried at 60 °C in an emptied PEQLAB PerfectBlot hybridization oven (VWR International GmbH, Darmstadt, Germany) and weighed daily after cooling to room temperature. During each weighing, filter weights were measured in 5 cycles on an Analytical balance ABP 100-4M (KERN & SOHN GmbH, Balingen, Germany) with 1 mg verification value.
 	
@@ -106,21 +106,23 @@ METHODOLOGICAL INFORMATION
 
 6. Describe any quality-assurance procedures performed on the data: visual comparions of data curves with replicates and previous experiments, data is unchanged
 
-7. People involved with sample collection, processing, analysis and/or submission: Rainer Machne, Tobias Pfennig
+7. People involved with sample collection, processing, analysis and/or submission: Rainer Machne, Tobias Pfennig, Jonas Burmester
 
 
 DATA-SPECIFIC INFORMATION FOR: 27_Ecoli_2020_REDUCTION-1_layout.csv
 
-1. Number of variables: 3
+1. Number of variables: 4
 
 2. Number of cases/rows: 48
 
 3. Variable List: 
-	glc: concentration of glucose [C-mmol l^-1]
+	Ec_W3110Z1: used strain (Escherichis coli W3110Z1)
 	
-	acetate: concentration of acetate [C-mmol l^-1]
+	Glc: concentration of glucose [C-mmol l^-1]
 	
-	aTc: concentration of Anhydrotetracycline for indcution (NOT USED)
+	Ace: concentration of acetate [C-mmol l^-1]
+	
+	aTc: concentration of anhydrotetracycline for indcution (NOT USED)
 
 4. Missing data codes:
 
@@ -146,7 +148,7 @@ DATA-SPECIFIC INFORMATION FOR: 27_Ecoli_2020_REDUCTION-1.csv
 	
 	DO(Pst3): raw O2 concentration signal [AU]
 	
-	NADH - NADPH: pooled NADH and NADPH fluorescence signal
+	NADH - NADPH: pooled NADH and NADPH fluorescence signal [AU]
 	
 	Temperature: unknown, possibly measurement chamber temperature [°C]
 	

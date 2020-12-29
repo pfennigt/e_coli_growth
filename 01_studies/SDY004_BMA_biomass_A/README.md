@@ -1,9 +1,9 @@
-This SDY002_BMG_biomass_G README.md file was generated on 2020-12-29 by Tobias Pfennig
+This SDY004_BMA_biomass_A README.md file was generated on 2020-12-29 by Tobias Pfennig
 
 
 GENERAL INFORMATION
 
-1. Title of Dataset: SDY002_BMG_biomass_G
+1. Title of Dataset: SDY004_BMA_biomass_A
 
 2. Author Information
 	A. Principal Investigator Contact Information
@@ -19,12 +19,12 @@ GENERAL INFORMATION
 		Email: tobias.pfennig@hhu.de
 
 	C. Alternate Contact Information
-		Name: 
-		Institution: 
+		Name: Jonas Burmester
+		Institution: Heinrich Heine University - Institute for synthetic microbiology
 		Address: 
-		Email: 
+		Email: jonas.burmester@hhu.de
 
-3. Date of data collection (single date, range, approximate date): 2020-03-03
+3. Date of data collection (single date, range, approximate date): 2020-06-02
 
 4. Geographic location of data collection: 51.19055739134027, 6.7904520065037675
 
@@ -52,11 +52,15 @@ DATA & FILE OVERVIEW
 1. File List: 
 	ASY001_biolector_data: folder with BioLector Pro measurement data and layout file
 	
-	ASY002_drymass_weights: folder with manually noted weights of dried filters with or without applied BioLector biomass samples
+	ASY002_drymass_weights: manually noted weights of dried filters with or without applied BioLector biomass samples
+	
+	ASY003_control_weights: folder with manually noted weights of dried filters with or without applied culture media
 
 2. Relationship between files, if important: 
 	ASY002_drymass_weights contains the biomass weights of the seven samples taken over the course of the ASY001_biolector_data BioLector Pro experiment
-
+	
+	ASY003_control_weights is a control experiment to ASY002_drymass_weights where only culture medium was used to assess if there is filter weight change from only medium
+	
 3. Additional related data collected that was not included in the current data package: 
 
 4. Are there multiple versions of the dataset? no
@@ -72,17 +76,17 @@ METHODOLOGICAL INFORMATION
 
 	Escherichia coli strain W3110Z1 was defrosted from -80 °C freezer sample #DD13 (genotype: laciq, PN25-tetR, SpR, IN(rrnD-rrnE)1, rph-1, (see: ATCC 39936); received from: Expressys (Dr. Rolf Lutz)). 		
 	
-	The bacteria were first transferred into liquid LB medium (20 g l^-1 LB Broth (Lennox); Carl Roth GmbH + Co. KG, Karlsruhe, Germany) with 100 mg ml^1 spectinomycin and incubated at 250 rpm and 37 °C. After one change of medium, they were plated on an agarose Petri dish containing 35 g l^-1 LB broth and 100 mg ml^-1 spectinomycin. The inoculated plate was left to incubate at 37 °C overnight. The bacteria were transferred onto new agarose plates and incubated at 37 °C multiple times to acchieve single, monoclonal colonies. The last plate was placed in refrigeration and used as the source for inoculations of liquid media.
+	The bacteria were plated on an agarose Petri dish containing 35 g l^-1 LB broth and 100 mg ml^-1 spectinomycin. The inoculated plate was left to incubate at 37 °C overnight. The bacteria were transferred onto new agarose plates and incubated at 37 °C multiple times to acchieve single, monoclonal colonies. The last plate was placed in refrigeration and used as the source for inoculations of liquid media.
 	
 	Liquid cultures were created by picking a colony from the source-plate and transferring it into 5 ml of minimal M9 medium with growth-supporting supplements, antibiotics, and 22 mM (0.4 % w/v) glucose ("M9G", Tab. S2). Yeast extract was also added to the medium to a concentration of 1 g l^-1. This liquid culture was then incubated at 250 rpm and 37 °C. Every two to seven days, 50 ul of this liquid culture were transferred into 5 ml of fresh M9G medium and continued to be incubated. One day before the measurement the culture was renewed as explained before.
 	
-	5 ml of an 1 OD cell solution were prepared by first measuring the optical density at 600 nm wavelength of a 1:4 dilution of culture with MilliQ. An appropriate amount of cell culture was spun down and the cell pellet was resuspended in 5 ml of fresh M9 medium with growth-supporting additives and antibiotics ("M9S", Tab. S2) by pipetting. Each 50 ml of M9S and M9G, as well as the 5 ml of 1 OD cell solution were used for culture praparation. A 48-well MTP-48-BOH well plate ("FlowerPlate"; m2p-labs GmbH, Baesweiler, Germany) was filled with 900 ul M9G medium per well resulting in a uniform glucose carbon-molarity of 119.88 C-mmol l^-1. Each inocoulated well was additionally filled with 100 ul of cell solution. The 3 blank wells contained additional 100 ul of M9S.
+	5 ml of an 1 OD cell solution were prepared by first measuring the optical density at 600 nm wavelength of a 1:4 dilution of culture with MilliQ. An appropriate amount of cell culture was spun down and the cell pellet was resuspended in 5 ml of fresh M9 medium with growth-supporting additives and antibiotics ("M9S", Tab. S2) by pipetting. Each 50 ml of M9S and 66 mM (0.4 % w/v) acetate ("M9A", Tab. S2) medium, as well as the 5 ml of 1 OD cell solution were used for culture praparation. A 48-well MTP-48-BOH well plate ("FlowerPlate"; m2p-labs GmbH, Baesweiler, Germany) was filled with 900 ul M9A medium per well resulting in a uniform acetate carbon-molarity of 119.88 C-mmol l^-1. Each inocoulated well was additionally filled with 100 ul of cell solution. The 3 blank wells contained additional 100 ul of M9S.
 	
 	The FlowerPlate was measured in a BioLector Pro (m2p-labs GmbH, Baesweiler, Germany) bioreactor at 37 °C with 900 rpm and the optical modules (product number and gain in parenthesis): scatter (E-OP-201, 3), riboflavin fluorescence (E-OP-227, 6), pH (E-OP-202, 7), O2 saturation (E-OP-203, 7), and NADH fluorescence (E-OP-405, 7).
 	
-	Starting at a raw scatter value of 1.5, each 6 wells were sampled once per hour and pooled. 5 ml of this pooled sample were pulled through pre-dried and pre-weighed ReliaDisc Non-sterile Membrane Filtration Media (Ahlstrom-Munksjo, Helsinki, Finland) cellulose-acetate filters with 0.2 mm pore size filters using a vaccuum. The filters were subsequently dried at 60 °C in an emptied PEQLAB PerfectBlot hybridization oven (VWR International GmbH, Darmstadt, Germany) and weighed daily after cooling to room temperature. During each weighing, filter weights were measured in 3 to 5 cycles on an Analytical balance ABP 100-4M (KERN & SOHN GmbH, Balingen, Germany) with 1 mg verification value.
+	Starting at a raw scatter value of 1.5, each 6 wells were sampled once per hour and pooled. 5 ml of this pooled sample were pulled through pre-dried and pre-weighed ReliaDisc Non-sterile Membrane Filtration Media (Ahlstrom-Munksjo, Helsinki, Finland) cellulose-acetate filters with 0.2 mm pore size filters using a vaccuum. The filters were subsequently dried at 60 °C in an emptied PEQLAB PerfectBlot hybridization oven (VWR International GmbH, Darmstadt, Germany) and weighed after 1, 2, 3, 5, 8, and 11 days after cooling to room temperature. During each weighing, filter weights were measured in 3 to 6 cycles on an Analytical balance ABP 100-4M (KERN & SOHN GmbH, Balingen, Germany) with 1 mg verification value.
 	
-	After 3 months the filters were also dried and weighed again using the same protocol but a variable number of measurement cycles.
+	Additionally, each three cellulose-acetate filters were treated in the same way with pure M9G or M9A media. This served to evaluate if the protocol and media themselves produced significant changes in filter weights.
 	
 	CAUTION: The non-centered placement of the filters on the scale - as used in this experiment - has been shown to influence the measured weights of the filters. It is revised to redo the experiment.
 	

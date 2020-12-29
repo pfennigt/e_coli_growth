@@ -1,9 +1,9 @@
-This SDY003_HighG_gradient_G README.md file was generated on 2020-12-29 by Tobias Pfennig
+This SDY009_Z1WT_gradient_G_Z1andWT README.md file was generated on 2020-12-29 by Tobias Pfennig
 
 
 GENERAL INFORMATION
 
-1. Title of Dataset: SDY003_HighG_gradient_G
+1. Title of Dataset: SDY009_Z1WT_gradient_G_Z1andWT
 
 2. Author Information
 	A. Principal Investigator Contact Information
@@ -24,7 +24,7 @@ GENERAL INFORMATION
 		Address: 
 		Email: 
 
-3. Date of data collection (single date, range, approximate date): 2020-03-12
+3. Date of data collection (single date, range, approximate date): 2020-10-20
 
 4. Geographic location of data collection: 51.19055739134027, 6.7904520065037675
 
@@ -50,7 +50,7 @@ SHARING/ACCESS INFORMATION
 DATA & FILE OVERVIEW
 
 1. File List: 
-	ASY001_biolector_data: folder with BioLector Pro measurement data and layout file
+	ASY001_biolector_data: folder with BioLector Pro measurement data
 	
 	ASY001_biolector_data_OTscript.py: OT-2 script used for pipetting of the measured FlowerPlate
 
@@ -70,15 +70,17 @@ METHODOLOGICAL INFORMATION
 1. Description of methods used for collection/generation of data: 
 	Information to used media and references can be found in ../../../06_manuscripts/Studying_Multiple_Growth_Phases_of_E_coli_on_Minimal_Medium_with_Experiment_and_Theory_Tobias_Pfennig.pdf
 
-	Escherichia coli strain W3110Z1 was defrosted from -80 °C freezer sample #DD13 (genotype: laciq, PN25-tetR, SpR, IN(rrnD-rrnE)1, rph-1, (see: ATCC 39936); received from: Expressys (Dr. Rolf Lutz)). 		
+	Escherichia coli strain W3110Z1 was defrosted from -80 °C freezer sample #DD13 (genotype: laciq, PN25-tetR, SpR, IN(rrnD-rrnE)1, rph-1, (see: ATCC 39936); received from: Expressys (Dr. Rolf Lutz)). The second used strain W3110 (here also W3110WT) was also defrosted from -80 °C freezer sample #DD1 (genotype: IN(rrnD-rrnE)1, rph-1, (see: ATCC 39936)).
 	
-	The bacteria were first transferred into liquid LB medium (20 g l^-1 LB Broth (Lennox); Carl Roth GmbH + Co. KG, Karlsruhe, Germany) with 100 mg ml^1 spectinomycin and incubated at 250 rpm and 37 °C. After one change of medium, they were plated on an agarose Petri dish containing 35 g l^-1 LB broth and 100 mg ml^-1 spectinomycin. The inoculated plate was left to incubate at 37 °C overnight. The bacteria were transferred onto new agarose plates and incubated at 37 °C multiple times to acchieve single, monoclonal colonies. The last plate was placed in refrigeration and used as the source for inoculations of liquid media.
+	The bacteria strains were plated separately on agarose Petri dishes containing 35 g l^-1 LB broth and for strain W3110Z1 also 100 mg ml^-1 spectinomycin. The inoculated plates were left to incubate at 37 °C overnight. The bacteria were transferred onto new agarose plates and incubated at 37 °C multiple times to acchieve single, monoclonal colonies. The last plates were placed in refrigeration and used as the source for inoculations of liquid media.
 	
-	Liquid cultures were created by picking a colony from the source-plate and transferring it into 5 ml of minimal M9 medium with growth-supporting supplements, antibiotics, and 22 mM (0.4 % w/v) glucose ("M9G", Tab. S2). Yeast extract was also added to the medium to a concentration of 1 g l^-1. This liquid culture was then incubated at 250 rpm and 37 °C. Every two to seven days, 50 ul of this liquid culture were transferred into 5 ml of fresh M9G medium and continued to be incubated. One day before the measurement the culture was renewed as explained before.
+	Liquid cultures were created by picking a colony from each source-plate and transferring them separately into 5 ml of minimal M9 medium with growth-supporting supplements, 22 mM (0.4 % w/v) glucose ("M9G", Tab. S2) and in the case of W3110Z1 also spectinomycin. To ensure optimal growth, all media and supplements were freshly mixed from base materials. These liquid cultures were then incubated at 250 rpm and 37 °C. Every two to seven days, 50 ul of the liquid cultures were transferred into 5 ml of fresh M9G medium with appropriate composition and continued to be incubated. One day before the measurement the cultures were renewed as explained before.
 	
-	5 ml of an 1 OD cell solution were prepared by first measuring the optical density at 600 nm wavelength of a 1:4 dilution of culture with MilliQ. An appropriate amount of cell culture was spun down and the cell pellet was resuspended in 5 ml of fresh M9 medium with growth-supporting additives and antibiotics ("M9S", Tab. S2) by pipetting. Each 50 ml of M9S and M9G, as well as the 5 ml of 1 OD cell solution were placed in an OT-2 pipetting robot with P300 pipette module (Opentrons, New York, USA). A 48-well MTP-48-BOH well plate ("FlowerPlate"; m2p-labs GmbH, Baesweiler, Germany) was filled using the pipetting script ASY001_biolector_data_OTscript.py. The layout included seven-step gradients of glucose ranging from 0 to 119.88 C-mmol l^-1. Each incoulated well was filled with 900 ul of appropriately mixed medium and 100 ul of cell solution. The 3 blank wells contained 1 ml of medium with different carbon concentrations.
+	6 ml of 1 OD cell solutions were prepared by first measuring the optical density at 600 nm wavelength of a 1:4 dilution of each culture with MilliQ. An appropriate amount of cell culture was spun down and the cell pellet was resuspended in 6 ml of fresh M9 medium with growth-supporting additives and antibiotics ("M9S", Tab. S2) by pipetting. Each 30 ml of M9S and M9G, as well as both of the 6 ml of 1 OD cell solutions were placed in an OT-2 pipetting robot with P300 pipette module (Opentrons, New York, USA). A 48-well MTP-48-BOH well plate ("FlowerPlate"; m2p-labs GmbH, Baesweiler, Germany) was filled using the pipetting script ASY001_biolector_data_OTscript.py. The layout included seven-step gradients of glucose ranging from 0 to 119.88 C-mmol l^-1. Each incoulated well was filled with 900 ul of appropriately mixed medium and 100 ul of either W3110WT or W3110Z1 cell solution. The 3 blank wells contained 1 ml of medium with uniform 119.88 C-mmol l^-1 glucuse concentration.
 	
 	The FlowerPlate was measured in a BioLector Pro (m2p-labs GmbH, Baesweiler, Germany) bioreactor at 37 °C with 900 rpm and the optical modules (product number and gain in parenthesis): scatter (E-OP-201, 3), riboflavin fluorescence (E-OP-227, 6), pH (E-OP-202, 7), O2 saturation (E-OP-203, 7), and NADH fluorescence (E-OP-405, 7).
+	
+	NOTE: This experiment is a corrected version of SDY008_Z1WTf without spectinomycin in the FlowerPlate medium and with the correct calibration data used
 	
 2. Methods for processing the data: 
 

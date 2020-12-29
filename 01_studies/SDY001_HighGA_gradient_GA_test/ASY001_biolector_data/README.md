@@ -1,4 +1,4 @@
-This ASY001_biolector_data readme.txt file was generated on 2020-12-20 by Tobias Pfennig
+This ASY001_biolector_data README.md file was generated on 2020-12-29 by Tobias Pfennig
 
 
 GENERAL INFORMATION
@@ -60,9 +60,9 @@ DATA & FILE OVERVIEW
 	
 	plot_annotations_glucose.csv: manual annotations for points of interest in the BioLector Pro data for glucose samples
 	
-	read_data_acetate.R: Reads acetate samples from BioLector Pro data and respective plot annotations into R
+	read_data_acetate.R: reads acetate samples from BioLector Pro data and respective plot annotations into R
 	
-	read_data_glucose.R: Reads glucose samples from BioLector Pro data and respective plot annotations into R
+	read_data_glucose.R: reads glucose samples from BioLector Pro data and respective plot annotations into R
 
 2. Relationship between files, if important: 
 	25_Ecoli_2020_REDUCTION-1.csv is better readable, processed version of 25-Ecoli_2020--2020-02-18-15-37-46.csv
@@ -73,9 +73,9 @@ DATA & FILE OVERVIEW
 	
 	plot_annotations_glucose.csv describes manually annotated points in glucose samples of 25-Ecoli_2020--2020-02-18-15-37-46.csv and 25_Ecoli_2020_REDUCTION-1.csv
 	
-	read_data_acetate.R: Reads acetate samples from 25_Ecoli_2020_REDUCTION-1.csv and plot_annotations_acetate.csv into R
+	read_data_acetate.R: reads acetate samples from 25_Ecoli_2020_REDUCTION-1.csv and plot_annotations_acetate.csv into R
 	
-	read_data_glucose.R: Reads glucose samples from 25_Ecoli_2020_REDUCTION-1.csv and plot_annotations_glucose.csv into R
+	read_data_glucose.R: reads glucose samples from 25_Ecoli_2020_REDUCTION-1.csv and plot_annotations_glucose.csv into R
 
 3. Additional related data collected that was not included in the current data package: 
 
@@ -94,11 +94,11 @@ METHODOLOGICAL INFORMATION
 	
 	The bacteria were first transferred into liquid LB medium (20 g l^-1 LB Broth (Lennox); Carl Roth GmbH + Co. KG, Karlsruhe, Germany) with 100 mg ml^1 spectinomycin and incubated at 250 rpm and 37 °C. After one change of medium, they were plated on an agarose Petri dish containing 35 g l^-1 LB broth and 100 mg ml^-1 spectinomycin. The inoculated plate was left to incubate at 37 °C overnight. The bacteria were transferred onto new agarose plates and incubated at 37 °C multiple times to acchieve single, monoclonal colonies. The last plate was placed in refrigeration and used as the source for inoculations of liquid media.
 	
-	Liquid cultures were created by picking a colony from the source-plate and transferring it into 5 ml of minimal M9 medium with growth-supporting supplements, antibiotics, 22 mM (0.4 % w/v) glucose ("M9G", Tab. S2), depending on the experiment. Yeast extract was also added to the medium to a concentration of 1 g l^-1. This liquid culture was then incubated at 250 rpm and 37 °C. Every two to seven days, 50 ul of this liquid culture were transferred into 5 ml of fresh M9G medium and continued to be incubated. One day before the measurement the culture was renewed as explained before.
+	Liquid cultures were created by picking a colony from the source-plate and transferring it into 5 ml of minimal M9 medium with growth-supporting supplements, antibiotics, and 22 mM (0.4 % w/v) glucose ("M9G", Tab. S2). Yeast extract was also added to the medium to a concentration of 1 g l^-1. This liquid culture was then incubated at 250 rpm and 37 °C. Every two to seven days, 50 ul of this liquid culture were transferred into 5 ml of fresh M9G medium and continued to be incubated. One day before the measurement the culture was renewed as explained before.
 	
-	5 ml of an 1 OD cell solution were prepared by first measuring the optical density at 600 nm wavelength of a 1:4 dilution of culture with MilliQ. An appropriate amount of cell culture that was spun down and the cell pellet was resuspended in 5 ml of fresh M9 medium with growth-supporting additives and antibiotics ("M9S", Tab. S2) by pipetting. Each 50 ml of M9S, M9G, and M9A media, as well as the 5 ml of 1 OD cell solution were placed in an OT-2 pipetting robot with P300 pipette module (Opentrons, New York, USA). A 48-well MTP-48-BOH well plate ("FlowerPlate"; m2p-labs GmbH, Baesweiler, Germany) was filled using the pipetting script ../ASY001_biolector_data_OTscript.py. The layout included seven-step gradients of both glucose and acetate with equal carbon-molarity ranging from 0 to 119.88 C-mmol l^-1. Each incoulated well was filled with 900 ul of appropriately mixed medium and 100 ul of cell solution. The 6 blank wells contained 1 ml of medium with different carbon sources and concentrations.
+	5 ml of an 1 OD cell solution were prepared by first measuring the optical density at 600 nm wavelength of a 1:4 dilution of culture with MilliQ. An appropriate amount of cell culture was spun down and the cell pellet was resuspended in 5 ml of fresh M9 medium with growth-supporting additives and antibiotics ("M9S", Tab. S2) by pipetting. Each 50 ml of M9S, M9G, and 66 mM (0.4 % w/v) acetate ("M9A", Tab. S2) medium, as well as the 5 ml of 1 OD cell solution were placed in an OT-2 pipetting robot with P300 pipette module (Opentrons, New York, USA). A 48-well MTP-48-BOH well plate ("FlowerPlate"; m2p-labs GmbH, Baesweiler, Germany) was filled using the pipetting script ../ASY001_biolector_data_OTscript.py. The layout included seven-step gradients of both glucose and acetate with equal carbon-molarity ranging from 0 to 119.88 C-mmol l^-1. Each incoulated well was filled with 900 ul of appropriately mixed medium and 100 ul of cell solution. The 6 blank wells contained 1 ml of medium with different carbon sources and concentrations.
 	
-	The FlowerPlate was measured in a BioLector Pro at 37 °C with 900 rpm and the optical modules (product number and gain in parenthesis): scatter (E-OP-201, 3), riboavin fluorescence (E-OP-227, 6), pH(E-OP-202, 7), O2 saturation (E-OP-203, 7) and NADH fluorescence(E-OP-405, 1).
+	The FlowerPlate was measured in a BioLector Pro (m2p-labs GmbH, Baesweiler, Germany) bioreactor at 37 °C with 900 rpm and the optical modules (product number and gain in parenthesis): scatter (E-OP-201, 3), riboflavin fluorescence (E-OP-227, 6), pH (E-OP-202, 7), O2 saturation (E-OP-203, 7), and NADH fluorescence (E-OP-405, 1).
 	
 2. Methods for processing the data: 
 	25_Ecoli_2020_REDUCTION-1.csv was produced by reading 25-Ecoli_2020--2020-02-18-15-37-46.csv into the BioLection software and saving the data via Data Management > Save as... > 1 (No Reduction)
@@ -121,16 +121,18 @@ METHODOLOGICAL INFORMATION
 
 DATA-SPECIFIC INFORMATION FOR: 25_Ecoli_2020_REDUCTION-1_layout.csv
 
-1. Number of variables: 3
+1. Number of variables: 4
 
 2. Number of cases/rows: 48
 
 3. Variable List: 
-	glc: concentration of glucose [C-mmol l^-1]
+	Ec_W3110Z1: used strain (Escherichia coli W3110Z1)
 	
-	acetate: concentration of acetate [C-mmol l^-1]
+	Glc: concentration of glucose [C-mmol l^-1]
 	
-	aTc: concentration of Anhydrotetracycline for indcution (NOT USED)
+	Ace: concentration of acetate [C-mmol l^-1]
+	
+	aTc: concentration of anhydrotetracycline for indcution (NOT USED)
 
 4. Missing data codes:
 
@@ -156,7 +158,7 @@ DATA-SPECIFIC INFORMATION FOR: 25_Ecoli_2020_REDUCTION-1.csv
 	
 	DO(Pst3): raw O2 concentration signal [AU]
 	
-	NADH - NADPH: pooled NADH and NADPH fluorescence signal
+	NADH - NADPH: pooled NADH and NADPH fluorescence signal [AU]
 	
 	Temperature: unknown, possibly measurement chamber temperature [°C]
 	
@@ -192,7 +194,7 @@ DATA-SPECIFIC INFORMATION FOR: plot_annotations_acetate.csv
 	
 	x: time position of the annotated point [h]
 	
-	pos: assigned position of the annotation in the plot (+:top, -:bottom)
+	pos: assigned position of the annotation in the plot (+: top, -: bottom)
 	
 	lab: numeric-label of the annotated point in the plot
 
@@ -212,7 +214,7 @@ DATA-SPECIFIC INFORMATION FOR: plot_annotations_glucose.csv
 	
 	x: time position of the annotated point [h]
 	
-	pos: assigned position of the annotation in the plot (+:top, -:bottom)
+	pos: assigned position of the annotation in the plot (+: top, -: bottom)
 	
 	lab: numeric-label of the annotated point in the plot
 
