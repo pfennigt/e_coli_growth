@@ -1,3 +1,11 @@
+# Run the this script before running any other script
+# For this first adjust the line
+#	
+#	INVESTIGATIONPATH <- "" #change to local investigation path
+#	
+# to point towards the location of the investiation folder.
+
+
 # Adjust Paths to  the local investigation path &
 # Install all needed packages
 
