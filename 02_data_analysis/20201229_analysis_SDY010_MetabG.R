@@ -887,93 +887,97 @@ scatter_data <- data.table(scatter_data)
 scatter_data <- scatter_data[, .(groups, value = mean(value)), by = "times"]
 
 # Plot the metabolites and scatter
-ggplot() + 
-  theme_bw() +
-  plts$objects$scatter_drop_annotation +
+plts[["metabolites_summary"]] <- 
+  ggplot() + 
+    theme_bw() +
   
-  # Plot the scatter signal in the background (scaled for better visibility)
-  geom_line(
-    data = scatter_data,
-    aes(x = times, y = value, group = "scatter"),
-    alpha = 0.5,
-    size = 2
-  ) +
-  
-  geom_hline(yintercept = 0, linetype="dashed")+
-  
-  # Plot the glucose measurements
-  geom_point(
-    data = dats$glycogen_glucose$glycogen_combined,
-    aes(x = time_h, y = sample_glucose_Cmmol_l, col = "glucose", shape = "glucose")
-  ) +
-  geom_line(
-    data = dats$glycogen_glucose$glycogen_combined,
-    aes(x = time_h, y = average_glucose_Cmmol_l, col = "glucose")
-  ) +
-  
-  # Plot the acetate measurements
-  geom_point(
-    data = dats$acetate_primary$acetate_combined,
-    aes(x = time_h, y = sample_acetate_Cmmol_l, col = "acetate", shape = "acetate")
-  ) +
-  geom_line(
-    data = dats$acetate_primary$acetate_combined,
-    aes(x = time_h, y = sample_acetate_Cmmol_l, col = "acetate")
-  ) +
-  
-  # Plot the remeasured acetate measurements
-  geom_point(
-    data = dats$acetate_remeasured$acetate_combined,
-    aes(x = time_h, y = sample_acetate_Cmmol_l, col = "acetate\nremeasured", shape = "acetate\nremeasured")
-  ) +
-  geom_line(
-    data = dats$acetate_remeasured$acetate_combined,
-    aes(x = time_h, y = sample_acetate_Cmmol_l, col = "acetate\nremeasured")
-  ) +
-  
-  # Plot the glycogen measurements
-  geom_point(
-    data = dats$glycogen_glucose$glycogen_combined,
-    aes(
-      x = time_h,
-      y = sample_glycogen_Cmmol_l * 100000,
-      shape = "glycogen-bound\nglucose",
-      color = "glycogen-bound\nglucose"
+    # Add the drop annotation to the scatter plot
+    plts$objects$scatter_drop_annotation +
+    
+    # Plot the scatter signal in the background (scaled for better visibility)
+    geom_line(
+      data = scatter_data,
+      aes(x = times, y = value, group = "scatter", linetype = "scatter silhouette\nwith drops"),
+      alpha = 0.5,
+      size = 2
+    ) +
+    
+    geom_hline(yintercept = 0, linetype="dashed")+
+    
+    # Plot the glucose measurements
+    geom_point(
+      data = dats$glycogen_glucose$glycogen_combined,
+      aes(x = time_h, y = sample_glucose_Cmmol_l, col = "glucose", shape = "glucose")
+    ) +
+    geom_line(
+      data = dats$glycogen_glucose$glycogen_combined,
+      aes(x = time_h, y = average_glucose_Cmmol_l, col = "glucose")
+    ) +
+    
+    # Plot the acetate measurements
+    geom_point(
+      data = dats$acetate_primary$acetate_combined,
+      aes(x = time_h, y = sample_acetate_Cmmol_l, col = "acetate", shape = "acetate")
+    ) +
+    geom_line(
+      data = dats$acetate_primary$acetate_combined,
+      aes(x = time_h, y = sample_acetate_Cmmol_l, col = "acetate")
+    ) +
+    
+    # Plot the remeasured acetate measurements
+    geom_point(
+      data = dats$acetate_remeasured$acetate_combined,
+      aes(x = time_h, y = sample_acetate_Cmmol_l, col = "acetate\nremeasured", shape = "acetate\nremeasured")
+    ) +
+    geom_line(
+      data = dats$acetate_remeasured$acetate_combined,
+      aes(x = time_h, y = sample_acetate_Cmmol_l, col = "acetate\nremeasured")
+    ) +
+    
+    # Plot the glycogen measurements
+    geom_point(
+      data = dats$glycogen_glucose$glycogen_combined,
+      aes(
+        x = time_h,
+        y = sample_glycogen_Cmmol_l * 100000,
+        shape = "glycogen-bound\nglucose",
+        color = "glycogen-bound\nglucose"
+      ),
+      size = 3
+    ) +
+    
+    # Set the different point shape for glycogen
+    scale_shape_manual(values = c(
+      glucose = 19,
+      acetate = 19,
+      "acetate\nremeasured" = 19,
+      "glycogen-bound\nglucose" = 19
     ),
-    size = 3
-  ) +
-  
-  # Set the different point shape for glycogen
-  scale_shape_manual(values = c(
-    glucose = 19,
-    acetate = 19,
-    "acetate\nremeasured" = 19,
-    "glycogen-bound\nglucose" = 19
-  ),
-  guide = F
-  ) +
-  
-  scale_y_continuous(
-    sec.axis = sec_axis(
-      ~./100,
-      name = bquote("glycogen-bound glucose concentration [C-"*mu*"mol "~l^-1*"]")
+    guide = F
+    ) +
+    
+    scale_y_continuous(
+      sec.axis = sec_axis(
+        ~./100,
+        name = bquote("glycogen-bound glucose concentration [C-"*mu*"mol "~l^-1*"]")
+      )
+    ) +
+    
+    scale_color_manual(
+      values = c(
+        glucose = "royalblue3",
+        acetate = "firebrick2",
+        "acetate\nremeasured" = "firebrick4",
+        "glycogen-bound\nglucose" = "black"
+      )
+    ) +
+    scale_linetype_manual(values = c("scatter silhouette\nwith drops" = "solid")) +
+        
+    labs(
+      x = "time [h]",
+      y = bquote("glucose/ acetate concentration [C-mmol "~l^-1*"]"),
+      color = "metabolite", linetype = "overlay"
     )
-  ) +
-  
-  labs(
-    x = "time [h]",
-    y = bquote("concentration [C-mmol "~l^-1*"]"),
-    color = "metabolite", linetype = "estimated biomass"
-  ) +
-  
-  scale_color_manual(
-    values = c(
-      glucose = "royalblue3",
-      acetate = "firebrick2",
-      "acetate\nremeasured" = "firebrick4",
-      "glycogen-bound\nglucose" = "black"
-    )
-  )
 
 
 # Save the plots as files
