@@ -1,4 +1,4 @@
-This ASY004_metabolite_glucose_glycogen README.md file was generated on 2020-12-29 by Tobias Pfennig
+This ASY004_metabolite_glucose_glycogen README.md file was generated on 2020-12-30 by Tobias Pfennig
 
 
 GENERAL INFORMATION
@@ -190,6 +190,8 @@ DATA-SPECIFIC INFORMATION FOR: 20201027_metabolite_glucose_glycogen_METADATA.csv
 	sample_dilution: dilution of the sample before measurement (diluted to x times concentration)
 	
 	well_volume_mul: liquid volume in the measured well [ul]
+	
+	wells: FlowerPlate wells sampled for the metabolite sample
 
 4. Missing data codes:
 

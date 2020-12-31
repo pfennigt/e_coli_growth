@@ -39,7 +39,7 @@ dat$biolector_parameters = list(
     "scatter" = "AU",
     "ribof" = "AU",
     "O2" = "'%'",
-    "pH" = "",
+    "pH" = "' '",
     "NADH" = "AU"
   ),
   # descriptive text for the raw data measurements (formatted to be parsed)
@@ -66,7 +66,7 @@ dat$bgCols = "royalblue3"
 dat$xrng = c(0,22.4)
 
 # Define parameters for the scatter peak search
-dat$ignoreWells = paste0(rep(LETTERS[1:6], each=2), c(1,8))
+dat$ignoreWells = paste0(rep(LETTERS[1:6], each = 8), 1:8)[-c(8,16,24)]
 dat$peakTimeRange = c(5.5, 12.5)
 
 # Read biolector data

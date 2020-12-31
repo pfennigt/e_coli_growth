@@ -5,6 +5,7 @@ An investigation of the growth of Escherichia coli strains W3110Z1 and W3110 usi
 # Structure information
 
 This project is structured in the style of ISA: https://isa-tools.org/index.html
+
 	investigation: "High level concept to link related studies"
 		The overall project of investigating the E. coli growth
 		This uppermost folder level will also be called the investigation folder
@@ -27,6 +28,7 @@ This project is structured in the style of ISA: https://isa-tools.org/index.html
 
 
 Folder structure in the investigation folder:
+
 	01_studies: Contains studies and their assays
 	
 	02_data_analysis: Data analysis performed on the study data using R

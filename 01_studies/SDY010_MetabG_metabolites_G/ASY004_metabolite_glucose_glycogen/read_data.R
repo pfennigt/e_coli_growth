@@ -22,7 +22,7 @@ data.file <- file.path(DATPATH, "20201027_metabolite_glucose_glycogen_best_gain.
 meta.file <- file.path(DATPATH, "20201027_metabolite_glucose_glycogen_METADATA.csv")
 
 # Read weight data
-dat$data <- read.csv(data.file, skip = 14, header=T)
+dat$data <- read.csv(data.file, skip = 15, header=T)
 
 # Read metadata
 dat$metadata <- read.csv(meta.file)

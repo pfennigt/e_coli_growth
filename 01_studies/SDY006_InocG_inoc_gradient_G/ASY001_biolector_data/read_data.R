@@ -22,7 +22,7 @@ annotation.file <- file.path(DATPATH,"plot_annotations.csv")
 # Define experimental parameters (formatted to be parsed)
 dat$carbon_source = "glucose"
 dat$varied_factor = "inoculation~OD[600]"
-dat$varied_factor_unit = ""
+dat$varied_factor_unit = "' '"
 
 # Define used BioLector parameters
 dat$biolector_parameters = list(
@@ -39,7 +39,7 @@ dat$biolector_parameters = list(
     "scatter" = "AU",
     "ribof" = "AU",
     "O2" = "'%'",
-    "pH" = "",
+    "pH" = "' '",
     "NADH" = "AU"
   ),
   # descriptive text for the raw data measurements (formatted to be parsed)

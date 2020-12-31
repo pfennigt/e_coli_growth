@@ -14,7 +14,7 @@ dat$study_sub <- "Z1"
 
 # Define paths and locations
 expid <- "36_Ecoli_2020-1831_REDUCTION-1"
-DATPATH <- "01_studies/SDY007_HighA_gradient_A/ASY001_biolector_data"
+DATPATH <- "01_studies/SDY009_Z1WT_gradient_G_Z1andWT/ASY001_biolector_data"
 data.file <- file.path(DATPATH, paste0(expid,".csv"))
 layout.file <- file.path(DATPATH, paste0(expid,"_layout.csv"))
 annotation.file <- file.path(DATPATH,"plot_annotations.csv")
@@ -39,7 +39,7 @@ dat$biolector_parameters = list(
     "scatter" = "AU",
     "ribof" = "AU",
     "O2" = "'%'",
-    "pH" = "",
+    "pH" = "' '",
     "NADH" = "AU"
   ),
   # descriptive text for the raw data measurements (formatted to be parsed)

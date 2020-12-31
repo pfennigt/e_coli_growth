@@ -1,4 +1,4 @@
-This ASY002_metabolite_acetate README.md file was generated on 2020-12-29 by Tobias Pfennig
+This ASY002_metabolite_acetate README.md file was generated on 2020-12-30 by Tobias Pfennig
 
 
 GENERAL INFORMATION
@@ -152,6 +152,8 @@ DATA-SPECIFIC INFORMATION FOR: 20201023_metabolite_acetate_METADATA
 	sample_dilution: dilution of the sample before measurement (diluted to x times concentration)
 	
 	well_volume_mul: liquid volume in the measured well [ul]
+	
+	wells: FlowerPlate wells sampled for the metabolite sample
 
 4. Missing data codes:
 

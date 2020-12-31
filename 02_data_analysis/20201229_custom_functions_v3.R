@@ -225,7 +225,13 @@ savePlts = function(x = "RPlot", type = "pdf", filePath = "", prefix="", width =
     plt = recordPlot()
     
     pltNam = paste0(prefix, x, ".", type)
-    pltPath = file.path(filePath, pltNam)
+    
+    pltPath = if (nchar(filePath) == 0) {
+      pltNam
+      
+    } else {
+      file.path(filePath, pltNam)
+    }
     
     pltFunc(pltPath, width = width, height = height)
     print(plt)
@@ -237,7 +243,13 @@ savePlts = function(x = "RPlot", type = "pdf", filePath = "", prefix="", width =
     for(nam in nams){
       
       pltNam = paste0(prefix, nam,".", type)
-      pltPath = file.path(filePath, pltNam)
+      
+      pltPath = if (nchar(filePath) == 0) {
+        pltNam
+        
+      } else {
+        file.path(filePath, pltNam)
+      }
       
       pltFunc(pltPath, width = width, height = height)
       print(x[[nam]])
@@ -890,4 +902,46 @@ show_colors <- function(x){
       axis.text.y = element_blank()
     )
   print(plt)
+}
+
+#create a semicricle annotation of points of interest from a dataframe
+create_poi_annotation <- function(annotation_df){
+  
+  if (! is.data.frame(annotation_df)) {
+    return(NULL)
+  }
+  
+  annotation_df$group <- as.character(annotation_df$group)
+  annotation_df$pos <- as.numeric(paste0(annotation_df$pos,"Inf"))
+  annotation_df$vjust <- mapvalues(
+    x = annotation_df$pos,
+    to = c("bottom","top"),
+    from = c(-Inf, Inf)
+  )
+  
+  annotation_pltobj <- list(
+    geom_point(
+      data = annotation_df,
+      aes(x = x, y = pos),
+      size = 8,
+      shape = 21,
+      fill = "grey"
+    ),
+    geom_text(
+      data = annotation_df,
+      aes(x = x, y = pos, vjust = vjust, label = lab),
+      size = 3.1
+    )
+  )
+  
+  return(annotation_pltobj)
+}
+
+# Allow for NA in coef function call
+coef_na <- function(object, ...){
+  if (all(is.na(object)))  {
+    return(NA)
+  } else{
+    coef(object, ...)
+  }
 }

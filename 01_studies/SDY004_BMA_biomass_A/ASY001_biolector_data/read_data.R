@@ -38,7 +38,7 @@ dat$biolector_parameters = list(
     "scatter" = "AU",
     "ribof" = "AU",
     "O2" = "'%'",
-    "pH" = "",
+    "pH" = "' '",
     "NADH" = "AU"
   ),
   # descriptive text for the raw data measurements (formatted to be parsed)

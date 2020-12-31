@@ -39,7 +39,7 @@ dat$biolector_parameters = list(
     "scatter" = "AU",
     "ribof" = "AU",
     "O2" = "'%'",
-    "pH" = "",
+    "pH" = "' '",
     "NADH" = "AU"
   ),
   # descriptive text for the raw data measurements (formatted to be parsed)
@@ -82,9 +82,9 @@ dat$data <- readExperiment(data.file,
                       blank.id = "blank",
                       blank.data = c("Biomass","Riboflavine", "NADH - NADPH"),
                       skip.wells  =  skipWellList,
-                      group1 = dat$CSourceRead,
-                      group2 = c(dat$CSourceRead,Amounts),
-                      group2.color = PltColors
+                      group1 = dat$layout_group,
+                      group2 = c(dat$layout_group,dat$layout_amount),
+                      group2.color = dat$layout_color
 )
 
 # Read plot annotation data
