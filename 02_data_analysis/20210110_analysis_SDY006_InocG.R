@@ -13,8 +13,11 @@ library(data.table)
 library(plyr)
 
 # Define analyzed study
-study_id <- "SDY002"
+study_id <- "SDY006"
 study_sub <- NA
+
+# Define used drymass estimation
+drymass_model <- "SDY002_BMG_drymass_estimation_twophase_ribof"
 
 # Define paths
 INVESTIGATIONPATH <- "C:/Users/tpeng/Desktop/e_coli_growth"
@@ -45,7 +48,7 @@ source(file.path(ANALYSISFOLDER, custom_functions_file))
 # Get study info ---------------------------
 
 # Retrieve scurrent study from index
-studies = read.csv(file.path(STUDYFOLDER, "studies_index.csv"))
+studies <- read.csv(file.path(STUDYFOLDER, "studies_index.csv"))
 
 current_study <- 
   studies$study_id == study_id & 
@@ -162,338 +165,11 @@ names(scatter_drop_values)[3] <- "value_type"
 dats$biolector <- dat
 
 
-# Integrate drymass measurements  ---------------------------
+# Load drymass estimation  ---------------------------
 
-# Define assay path
-assay_id <- "ASY002"
-assay_term <- sprintf("^%s[^\\.]*$", assay_id)
-
-ASSAYFOLDER <- dir(STUDYPATH)[
-  grep(assay_term, dir(STUDYPATH))
-]
-ASSAYPATH <- file.path(STUDYPATH,ASSAYFOLDER)
-
-# Define read_data file
-READFILE <- if (is.na(study_sub)) {
-  "read_data.R"
-} else {
-  sprintf("read_data_%s.R", study_sub)
-}
-
-# Read data
-source(file.path(ASSAYPATH, READFILE))
-
-# Get weights before ("pre") and after ("post") biomass application
-weight_type = sub("(.*)_[0-9]+", "\\1", names(dat$data))
-weight_type_uniqe = unique(weight_type[-1])
-
-# Get weight sample time points
-sample_times <- dat$metadata$time_h
-
-# Plot raw data
-sample_weights = reshape2::melt(
-  dat$data,
-  id.vars = "sample_id"
-)
-
-sample_weights$variable <- sub("(.*)_[0-9]+", "\\1", sample_weights$variable)
-sample_weights$variable <- factor(
-  sample_weights$variable, 
-  levels = unique(sample_weights$variable)
-)
-
-plts$filter_weights_raw <- 
-  ggplot(sample_weights, aes(x=NA, y=value, color=variable)) + 
-    theme_bw() +
-    geom_boxplot() +
-    geom_point(position=position_dodge(0.75)) +
-    facet_grid(.~factor(sample_id)) +
-    labs(x="sample ID", y="filter weights [mg]", color="measurement") +
-    scale_x_discrete(position="top", breaks=NULL)
-
-# Select data collected after 2 days of drying for further analysis
-analysis_weights <- dat$data[weight_type %in% c("sample_id", "pre", "post2")]
-
-# Add the metadata
-analysis_weights <- merge.data.frame(
-  dat$metadata[,c("sample_id", "time_h", "volume_ml")],
-  analysis_weights,
-  by = "sample_id"
-)
-
-# Reshape
-analysis_weights <- reshape2::melt(
-  analysis_weights, 
-  id.vars = c("sample_id", "time_h", "volume_ml"),
-  value.name = "weight_mg",
-  variable.name = "weight_type"
-)
-
-analysis_weights <- separate(
-  analysis_weights,
-  col = "weight_type",
-  into = c("weight_type", "replicate"),
-  sep = "_"
-)
-
-# Get mean "pre" weight of repeated measurements
-pre_means = rowMeans(dat$data[weight_type == "pre"])
-names(pre_means) = as.character(dat$metadata$sample_id)
-
-# Track the estimated standard deviations
-weight_sds <-  data.frame(sample_id = dat$data$sample_id)
-
-weight_sds$pre <- apply(dat$data[weight_type == "pre"], 1, sd)
-
-weight_sds$post2 <- apply(dat$data[weight_type == "post2"], 1, sd)
-
-# Calculate weight differences
-analysis_weights$diff_mg <- analysis_weights$weight_mg - pre_means
-
-weight_sds$diff_mg <- sqrt(weight_sds$pre^2 + weight_sds$post2^2)
-
-# Normalize weight differences
-analysis_weights$norm_diff_mgml <- analysis_weights$diff_mg / analysis_weights$volume_ml
-
-weight_sds$norm_diff_mgml <- weight_sds$diff_mg / dat$metadata$volume_ml
-
-# Convert weight differences into carbon concentration
-analysis_weights$drymass_cmmoll <- analysis_weights$norm_diff_mgml * cpg * mpc * 1000 #C-mmol/l
-
-weight_sds$drymass_cmmoll <- weight_sds$norm_diff_mgml * cpg * mpc * 1000
-
-# Plot the calculated dry mass
-plts$drymass_weights <- 
-  ggplot(analysis_weights[grepl("post", analysis_weights$weight_type),]) +
-    theme_bw() +
-    geom_hline(yintercept = 0, linetype  = "dashed") +
-    
-    geom_point(aes(x = time_h, y = drymass_cmmoll)) +
-    labs(x = "time [h]", y = "dry mass [C-mmol"~l^-1*"]", color = "Dryweight\nmeasurement")
-
-# Get sampling times of wells
-well_sampling_times = rep(Inf, length(wells))
-names(well_sampling_times) <- wells
-
-for (i in 1:nrow(dat$metadata)) {
-  sampled_wells <- dat$metadata[i, "wells"]
-  sampled_wells <- strsplit(sampled_wells,";")[[1]]
-  
-  well_sampling_times[sampled_wells] <- dat$metadata[i, "time_h"]
-}
-
-# Get BioLector measurements closest to the sampling times
-nearest_bl_times <- data.table(time = times, val = times, ID = 1:length(times))
-setattr(nearest_bl_times, "sorted", "time")  # let data.table know that w is sorted
-
-nearest_bl_times <- nearest_bl_times[J(dat$metadata$time_h), roll = "nearest"]
-
-nearest_bl_values <- lapply(c("scatter", "ribof"), function(x){
-  getData(dats$biolector$data, x)[nearest_bl_times$ID, reference_wells]
-})
-names(nearest_bl_values) <- c("scatter", "ribof")
-
-# Summarize data
-summary_weights <- data.table(analysis_weights)
-summary_weights <- summary_weights[
-  weight_type == "post2",
-  .(drymass_cmmoll = mean(drymass_cmmoll), norm_diff_mgml = mean(norm_diff_mgml)),
-  by="time_h"
-]
-summary_weights <- as.data.frame(summary_weights)
-summary_weights$sd_drymass_cmmoll <- weight_sds$drymass_cmmoll
-summary_weights$sd_norm_diff_mgml <- weight_sds$norm_diff_mgml
-
-summary_weights$scatter <- rowMeans(nearest_bl_values$scatter)
-summary_weights$sd_scatter <- apply(nearest_bl_values$scatter, 1, sd)
-
-summary_weights$ribof <- rowMeans(nearest_bl_values$ribof)
-summary_weights$sd_ribof <- apply(nearest_bl_values$ribof, 1, sd)
-
-# Annotate the approximate growth phase at the sampling points
-summary_weights$growth_phase = c(rep("1. growth",4), rep("2. growth",2), "stationary")
-
-# Plot the summarized data
-summary_weights_plot = data.frame(
-  time_h = summary_weights$time_h,
-  norm_diff_mgml = summary_weights$norm_diff_mgml,
-  sd_norm_diff_mgml = summary_weights$sd_norm_diff_mgml,
-  drymass_cmmoll = summary_weights$drymass_cmmoll,
-  sd_drymass_cmmoll = summary_weights$sd_drymass_cmmoll,
-  growth_phase = summary_weights$growth_phase,
-  
-  value = c(summary_weights$scatter, summary_weights$ribof),
-  sd_value = c(summary_weights$sd_scatter, summary_weights$sd_ribof),
-  value_type = rep(c("scatter","ribof"), each = 7)
-)
-
-plts$drymass_vs_scatter_ribof <- 
-  ggplot(summary_weights_plot) + 
-    theme_bw() +
-    geom_rect(
-      data = data.frame(1),
-      fill = dats$biolector$bgCols,
-      xmin = -Inf,
-      xmax = Inf,
-      ymin = -Inf,
-      ymax = Inf,
-      alpha = 0.2
-    ) +
-    geom_rect(
-      data = scatter_drop_values,
-      aes(xmin = xmin, xmax = xmax, fill = factor(drop_no)),
-      min = -Inf,
-      ymax = Inf,
-      alpha = 0.2
-    ) +
-    geom_hline(yintercept = 0, linetype ="dashed")+
-    
-    geom_point(aes(x = value, y = norm_diff_mgml, shape = growth_phase), size = 2.5)+
-    geom_errorbar(
-      aes(
-        x = value,
-        y = norm_diff_mgml,
-        ymin = norm_diff_mgml - sd_norm_diff_mgml,
-        ymax = norm_diff_mgml + sd_norm_diff_mgml
-      ),
-      width = 0.01) +
-    geom_errorbar(
-      aes(
-        x = value,
-        y = norm_diff_mgml,
-        xmin = value - sd_value,
-        xmax = value + sd_value
-      ),
-      width = 0.01
-    ) + 
-    
-    facet_grid(
-      value_type~.,
-      labeller = labeller(value_type = c("ribof" = "riboflavin", "scatter" = "scatter"))
-    ) +
-    expand_limits(x = 0, y = 0)+
-    labs(
-      y = "dry mass [mg"~ml^-1*"]",
-      x = "scatter or riboflavin [AU]",
-      shape = "growth phase",
-      fill = "scatter-drop"
-    ) +
-    scale_shape_manual(values = c(19, 15, 4))+
-    scale_fill_manual(values = c("gray50", "mediumorchid4"), labels = list("No. 1", "No. 2")) +
-    guides(
-      shape = guide_legend(order = 1),
-      fill = guide_legend(order = 2),
-      color = guide_legend(order = 3)
-    )
-
-# Save the measured drymasses to add to the biomass plot later
-plts$objects[["drymasses"]] = list(
-  geom_point(
-    data = summary_weights_plot,
-    aes(
-      x = time_h,
-      y = norm_diff_mgml,
-      shape = growth_phase
-    ),
-    size = 2.5,
-    col = "mediumorchid4"),
-  geom_errorbar(
-    data = summary_weights_plot,
-    aes(
-      x = time_h,
-      y = norm_diff_mgml,
-      ymin = norm_diff_mgml - sd_norm_diff_mgml,
-      ymax = norm_diff_mgml + sd_norm_diff_mgml
-    ),
-    width = 0.01,
-    col = "mediumorchid4")
-)
-
-# Estimate drymass from riboflavin
-drymass_lms <- list(
-  description = "estimate dry mass [mg ml^-1] from riboflavin [AU]; values before the scatter drop with lm1, values after the scatter drop with lm2",
-  estimator = "ribof",
-  lm1 = lm(
-    norm_diff_mgml ~ ribof,
-    summary_weights[summary_weights$growth_phase == "1. growth",]
-  ),
-  lm2 = lm(
-    norm_diff_mgml ~ ribof,
-    summary_weights[summary_weights$growth_phase != "1. growth",]
-  )
-)
-
-# Add linear models to the dry mass vs. riboflavin plot
-# First create the appropritate label
-drymass_lms_coefs <- lapply(drymass_lms[-c(1,2)], coef_na)
-drymass_lms_coefs <- do.call(rbind, drymass_lms_coefs)
-drymass_lms_coefs <- as.data.frame(drymass_lms_coefs)
-colnames(drymass_lms_coefs) <-  c("intercept", "slope")
-drymass_lms_coefs$value_type <- "ribof"
-
-drymass_lms_label <- sprintf("%d. fitted slope: %.3f", c(1,2), drymass_lms_coefs$slope)
-drymass_lms_label <- list(bquote(atop(.(drymass_lms_label[1]), .(drymass_lms_label[2]))))
-
-# predict a few intermediate values to show in the plot
-riboflavin_means = rowMeans(getData(dats$biolector$data, "ribof")[, reference_wells])
-
-drymass_lms_predicts = data.frame(
-  pred = estimate_two_phases(
-    values = riboflavin_means,
-    times = times,
-    switchTime = scatter_drops[1, "t1"],
-    lm1 = drymass_lms$lm1,
-    lm2 = drymass_lms$lm2
-  ),
-  value = riboflavin_means,
-  value_type = "ribof"
-)
-
-# Add the linear models to the plot
-plts$drymass_vs_scatter_ribof <- 
-  plts$drymass_vs_scatter_ribof +
-    geom_abline(
-      data = drymass_lms_coefs,
-      aes(
-        intercept = intercept,
-        slope = slope,
-        color = "growth phase\nspecific models"
-      ),
-      linetype = "dotted"
-    ) +
-    geom_label(
-      data = data.frame(value_type = "ribof"),
-      label = drymass_lms_label,
-      x = Inf,
-      y = 0,
-      hjust = "right",
-      vjust = "bottom",
-      color = "black",
-      parse = T
-    ) +
-    geom_path(data = drymass_lms_predicts, aes(x = value, y = pred, color = "concatenated")) +
-    scale_color_manual(name="linear models", values=c("red", "black"))
-
-# Save important variables in a list
-dat$dataParameters <- list(
-  sample_times <- dat$metadata$time_h,
-  well_times <- well_sampling_times
-)
-
-# Save drymass data for later use
-dats$drymass <- dat
-
-# Save the estimation model to a file
-drymass_lms_filename = paste(
-  dat$study_id,
-  dat$study_token,
-  "drymass_estimation_twophase_ribof.rds",
-  sep = "_"
-)
-
-saveRDS(
-  drymass_lms,
-  file = file.path(
+drymass_lms_filename <- sprintf("%s.rds", drymass_model)
+drymass_lms <- readRDS(
+  file.path(
     ANALYSISFOLDER,
     "data_analysis_outputs",
     drymass_lms_filename
@@ -503,46 +179,54 @@ saveRDS(
 
 # Continue analysis of BioLector data  ---------------------------
 
-# Create a mask excluding measured biolector values after sampling of the well
-sampling_exclusion_mat = matrix(
-  1,
-  nrow = length(times),
-  ncol = length(wells)
-)
+# Get the time of the first scatter drop in each well for dry mass estimation
+scatter_drops_wells <- sapply(factor_amount, function(amount){
+  if (is.na(amount) | amount == 0) {
+  return(Inf)
+    
+  } else {
+    res = scatter_drops[scatter_drops$groups == amount, "t1"][1]
+    
+    if (is.na(res)) {
+      return(Inf)
+      
+    } else {
+      return(res)
+    }
+  }
+})
 
-for (i in 1:ncol(sampling_exclusion_mat)) {
-  sampling_exclusion_mat[
-    c(
-      dats$biolector$dataParameters$times[-1],
-      Inf
-    ) > well_sampling_times[i],
-    i
-  ] <- NA
-} 
 
 # Calculate the biomass concentration [gDW/l] and save
-estimated_drymass_g <- apply(
-  getData(dats$biolector$data, "ribof"),
-  2,
+drymass_estimator_data <- getData(dats$biolector$data, drymass_lms$estimator)
+
+estimated_drymass_g_l <- lapply(
+  1:ncol(drymass_estimator_data),
   function(x){
     estimate_two_phases(
-      values = x,
+      values = drymass_estimator_data[,x],
       times = times,
-      switchTime = scatter_drops[1, "t1"],
+      switchTime = scatter_drops_wells[x],
       lm1 = drymass_lms$lm1,
       lm2 = drymass_lms$lm2
     )
   }
 )
 
+estimated_drymass_g_l <- do.call(cbind, estimated_drymass_g_l)
+dimnames(estimated_drymass_g_l) <- dimnames(drymass_estimator_data)
+
 dats$biolector$data <- addData(
   data = dats$biolector$data,
   ID = "drymass_g",
-  dat = estimated_drymass_g
+  dat = estimated_drymass_g_l
 )
 
+# Calculate the biomass amount [gDW]
+estimated_drymass_g <- estimated_drymass_g_l * 0.001 #gDW
+
 # Convert to C-mmol/l and save
-estimated_drymass <- estimated_drymass_g * cpg * mpc * 1000 # C-mmol/l
+estimated_drymass <- estimated_drymass_g_l * cpg * mpc * 1000 # C-mmol/l
 
 dats$biolector$data <- addData(
   data = dats$biolector$data,
@@ -783,9 +467,8 @@ plts$objects[["poi_annotation"]] <- create_poi_annotation(dats$biolector$anno)
 # Plot each measurement
 for(meas in measures){
 
-  # Get the measurement data and mask the sampled wells
+  # Get the measurement data
   measure_data <- getData(dats$biolector$data, meas)
-  measure_data <- measure_data * sampling_exclusion_mat
   
   # Convert into a ggplot usable format
   measure_df <- ggplotDf(measure_data, factor_amount, times)
@@ -824,9 +507,6 @@ for(meas in measures){
   plts[[meas]] <- measure_plot
 }
 
-# add the measured dry masses to the respective plot
-plts$drymass_g <- plts$drymass_g + plts$objects$drymasses
-
 # Save the plots as files
 savePlts(
   x = plts[names(plts) != "objects"],
@@ -838,5 +518,5 @@ savePlts(
     sep = "_"
   ),
   width = 10,
-  height = 6
+  height = 10
 )

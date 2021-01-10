@@ -13,7 +13,7 @@ library(data.table)
 library(plyr)
 
 # Define analyzed study
-study_id <- "SDY006"
+study_id <- "SDY005"
 study_sub <- NA
 
 # Define used drymass estimation
@@ -200,7 +200,7 @@ scatter_drops_wells <- sapply(factor_amount, function(amount){
 # Calculate the biomass concentration [gDW/l] and save
 drymass_estimator_data <- getData(dats$biolector$data, drymass_lms$estimator)
 
-estimated_drymass_g <- lapply(
+estimated_drymass_g_l <- lapply(
   1:ncol(drymass_estimator_data),
   function(x){
     estimate_two_phases(
@@ -213,18 +213,20 @@ estimated_drymass_g <- lapply(
   }
 )
 
-estimated_drymass_g <- do.call(cbind, estimated_drymass_g)
-dimnames(estimated_drymass_g) <- dimnames(drymass_estimator_data)
-
+estimated_drymass_g_l <- do.call(cbind, estimated_drymass_g_l)
+dimnames(estimated_drymass_g_l) <- dimnames(drymass_estimator_data)
 
 dats$biolector$data <- addData(
   data = dats$biolector$data,
   ID = "drymass_g",
-  dat = estimated_drymass_g
+  dat = estimated_drymass_g_l
 )
 
+# Calculate the biomass amount [gDW]
+estimated_drymass_g <- estimated_drymass_g_l * 0.001 #gDW
+
 # Convert to C-mmol/l and save
-estimated_drymass <- estimated_drymass_g * cpg * mpc * 1000 # C-mmol/l
+estimated_drymass <- estimated_drymass_g_l * cpg * mpc * 1000 # C-mmol/l
 
 dats$biolector$data <- addData(
   data = dats$biolector$data,

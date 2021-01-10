@@ -14,10 +14,10 @@ library(plyr)
 
 # Define analyzed study
 study_id <- "SDY001"
-study_sub <- "glucose"
+study_sub <- "acetate"
 
 # Define used drymass estimation
-drymass_model <- "SDY002_BMG_drymass_estimation_twophase_ribof"
+drymass_model <- "SDY004_BMA_drymass_estimation_twophase_scatter"
 
 # Define paths
 INVESTIGATIONPATH <- "C:/Users/tpeng/Desktop/e_coli_growth"
@@ -182,7 +182,7 @@ drymass_lms <- readRDS(
 # Get the time of the first scatter drop in each well for dry mass estimation
 scatter_drops_wells <- sapply(factor_amount, function(amount){
   if (is.na(amount) | amount == 0) {
-    return(Inf)
+  return(Inf)
     
   } else {
     res = scatter_drops[scatter_drops$groups == amount, "t1"][1]
@@ -200,7 +200,7 @@ scatter_drops_wells <- sapply(factor_amount, function(amount){
 # Calculate the biomass concentration [gDW/l] and save
 drymass_estimator_data <- getData(dats$biolector$data, drymass_lms$estimator)
 
-estimated_drymass_g <- lapply(
+estimated_drymass_g_l <- lapply(
   1:ncol(drymass_estimator_data),
   function(x){
     estimate_two_phases(
@@ -213,17 +213,20 @@ estimated_drymass_g <- lapply(
   }
 )
 
-estimated_drymass_g <- do.call(cbind, estimated_drymass_g)
-dimnames(estimated_drymass_g) <- dimnames(drymass_estimator_data)
+estimated_drymass_g_l <- do.call(cbind, estimated_drymass_g_l)
+dimnames(estimated_drymass_g_l) <- dimnames(drymass_estimator_data)
 
 dats$biolector$data <- addData(
   data = dats$biolector$data,
   ID = "drymass_g",
-  dat = estimated_drymass_g
+  dat = estimated_drymass_g_l
 )
 
+# Calculate the biomass amount [gDW]
+estimated_drymass_g <- estimated_drymass_g_l * 0.001 #gDW
+
 # Convert to C-mmol/l and save
-estimated_drymass <- estimated_drymass_g * cpg * mpc * 1000 # C-mmol/l
+estimated_drymass <- estimated_drymass_g_l * cpg * mpc * 1000 # C-mmol/l
 
 dats$biolector$data <- addData(
   data = dats$biolector$data,

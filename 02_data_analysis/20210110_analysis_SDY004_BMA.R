@@ -630,7 +630,7 @@ for (i in 1:ncol(sampling_exclusion_mat)) {
 } 
 
 # Calculate the biomass concentration [gDW/l] and save
-estimated_drymass_g <- apply(
+estimated_drymass_g_l <- apply(
   getData(dats$biolector$data, "scatter"),
   2,
   function(x){
@@ -647,11 +647,14 @@ estimated_drymass_g <- apply(
 dats$biolector$data <- addData(
   data = dats$biolector$data,
   ID = "drymass_g",
-  dat = estimated_drymass_g
+  dat = estimated_drymass_g_l
 )
 
+# Calculate the biomass amount [gDW]
+estimated_drymass_g <- estimated_drymass_g_l * 0.001 #gDW
+
 # Convert to C-mmol/l and save
-estimated_drymass <- estimated_drymass_g * cpg * mpc * 1000 # C-mmol/l
+estimated_drymass <- estimated_drymass_g_l * cpg * mpc * 1000 # C-mmol/l
 
 dats$biolector$data <- addData(
   data = dats$biolector$data,
